@@ -1,19 +1,30 @@
-# General stuff
+# General notes and tips
 
-**It may be better to use the `evaluation` column instead of the `evaluation_code` column for filtering and other data operations.**
+#### It may be better to use the `evaluation` column instead of the `evaluation_code` column for filtering and other data operations {-}
 
 Different scouting conventions mean that the entries in the `evaluation_code` column don't always mean the same thing. For example, a block scouted as `B/` is an invasion (net touch or other violation) according to the default DataVolley conventions, but some scouts instead use `B/` to indicate a block tool, and others use it to indicate a poor block back to the opposition team. When a file is read into R with `dv_read`, the evaluation codes are converted into strings (stored in the `evaluation` column) following the conventions specified by the `skill_evaluation_decode` argument. Using the `evaluation` column is therefore likely to be more robust than the `evaluation_code` column, especially if your code is to be used on files collected by different scouts.
 
 For example, find block invasions by
 
 ```{r eval = FALSE}
-x %>% dplyr::filter(skill == "Block" & evaluation == "Invasion")
+px %>% dplyr::filter(skill == "Block" & evaluation == "Invasion")
 
 ```
 
 rather than by
 
 ```{r eval = FALSE}
-x %>% dplyr::filter(skill == "Block" & evaluation_code == "/")
+px %>% dplyr::filter(skill == "Block" & evaluation_code == "/")
 
 ```
+
+
+#### Identifiers {-}
+
+There are a number of columns in the play-by-play data that are useful to identify different aspects of play
+
+- `match_id` uniquely identifies the match
+- `set_number` is the set number (1--5) within a match. If you want to uniquely identify a particular set (from amongst many matches) use the combination of `match_id` and `set_number`
+- `point_id` identifies the rally number (point) within a match. Each rally (point) begins with a serve (or rotation fault). Timeouts and other non-action points might have their own `point_id`, so don't rely on `point_id` values being consecutive from one rally to the next. `point_id` values are only unique within a match (so e.g. two different matches will both have a point with `point_id` value of 1
+- `team_touch_id` identifies the touches that a team makes while the ball is on their side of the net. So a serve will have a certain `team_touch_id`, then the reception, set, and attack made by the receiving team will all have the same `team_touch_id` (different to the serve's `team_touch_id`). The following block, dig, set, and attack will have another `team_touch_id`, and so on.
+- the `phase` column identifies the phase of play: it can take the values `Serve`, `Reception`, or `Transition`. Note that a block made against a reception attack (the attack made by the receiving team immediately after receiving the serve) is considered to be `Reception` phase, but the dig made by the blocking team immediately after that (and every subsequent action in the rally) are `Transition`

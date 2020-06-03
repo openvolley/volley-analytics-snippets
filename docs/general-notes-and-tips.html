@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5 General stuff | Volleyball analytics snippets</title>
+  <title>5 General notes and tips | Volleyball analytics snippets</title>
   <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5 General stuff | Volleyball analytics snippets" />
+  <meta property="og:title" content="5 General notes and tips | Volleyball analytics snippets" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://openvolley.github.io/volley-analytics-snippets/" />
   <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets/images/cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5 General stuff | Volleyball analytics snippets" />
+  <meta name="twitter:title" content="5 General notes and tips | Volleyball analytics snippets" />
   
   <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets/images/cover.png" />
@@ -142,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="reading-files.html"><a href="reading-files.html#reading-multiple-files"><i class="fa fa-check"></i><b>3.3</b> Reading multiple files</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="file-validation.html"><a href="file-validation.html"><i class="fa fa-check"></i><b>4</b> File validation</a></li>
-<li class="chapter" data-level="5" data-path="general-stuff.html"><a href="general-stuff.html"><i class="fa fa-check"></i><b>5</b> General stuff</a></li>
+<li class="chapter" data-level="5" data-path="general-notes-and-tips.html"><a href="general-notes-and-tips.html"><i class="fa fa-check"></i><b>5</b> General notes and tips</a></li>
 <li class="chapter" data-level="6" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>6</b> Court plots</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>6.1</b> Background on location information</a>
@@ -174,15 +174,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="general-stuff" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> General stuff</h1>
-<p><strong>It may be better to use the <code>evaluation</code> column instead of the <code>evaluation_code</code> column for filtering and other data operations.</strong></p>
+<div id="general-notes-and-tips" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> General notes and tips</h1>
+<div id="it-may-be-better-to-use-the-evaluation-column-instead-of-the-evaluation_code-column-for-filtering-and-other-data-operations" class="section level4 unnumbered" number="">
+<h4>It may be better to use the <code>evaluation</code> column instead of the <code>evaluation_code</code> column for filtering and other data operations</h4>
 <p>Different scouting conventions mean that the entries in the <code>evaluation_code</code> column don’t always mean the same thing. For example, a block scouted as <code>B/</code> is an invasion (net touch or other violation) according to the default DataVolley conventions, but some scouts instead use <code>B/</code> to indicate a block tool, and others use it to indicate a poor block back to the opposition team. When a file is read into R with <code>dv_read</code>, the evaluation codes are converted into strings (stored in the <code>evaluation</code> column) following the conventions specified by the <code>skill_evaluation_decode</code> argument. Using the <code>evaluation</code> column is therefore likely to be more robust than the <code>evaluation_code</code> column, especially if your code is to be used on files collected by different scouts.</p>
 <p>For example, find block invasions by</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="general-stuff.html#cb11-1"></a>x <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Block&quot;</span> <span class="op">&amp;</span><span class="st"> </span>evaluation <span class="op">==</span><span class="st"> &quot;Invasion&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="general-notes-and-tips.html#cb11-1"></a>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Block&quot;</span> <span class="op">&amp;</span><span class="st"> </span>evaluation <span class="op">==</span><span class="st"> &quot;Invasion&quot;</span>)</span></code></pre></div>
 <p>rather than by</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="general-stuff.html#cb12-1"></a>x <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Block&quot;</span> <span class="op">&amp;</span><span class="st"> </span>evaluation_code <span class="op">==</span><span class="st"> &quot;/&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="general-notes-and-tips.html#cb12-1"></a>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Block&quot;</span> <span class="op">&amp;</span><span class="st"> </span>evaluation_code <span class="op">==</span><span class="st"> &quot;/&quot;</span>)</span></code></pre></div>
+</div>
+<div id="identifiers" class="section level4 unnumbered" number="">
+<h4>Identifiers</h4>
+<p>There are a number of columns in the play-by-play data that are useful to identify different aspects of play</p>
+<ul>
+<li><code>match_id</code> uniquely identifies the match</li>
+<li><code>set_number</code> is the set number (1–5) within a match. If you want to uniquely identify a particular set (from amongst many matches) use the combination of <code>match_id</code> and <code>set_number</code></li>
+<li><code>point_id</code> identifies the rally number (point) within a match. Each rally (point) begins with a serve (or rotation fault). Timeouts and other non-action points might have their own <code>point_id</code>, so don’t rely on <code>point_id</code> values being consecutive from one rally to the next. <code>point_id</code> values are only unique within a match (so e.g. two different matches will both have a point with <code>point_id</code> value of 1</li>
+<li><code>team_touch_id</code> identifies the touches that a team makes while the ball is on their side of the net. So a serve will have a certain <code>team_touch_id</code>, then the reception, set, and attack made by the receiving team will all have the same <code>team_touch_id</code> (different to the serve’s <code>team_touch_id</code>). The following block, dig, set, and attack will have another <code>team_touch_id</code>, and so on.</li>
+<li>the <code>phase</code> column identifies the phase of play: it can take the values <code>Serve</code>, <code>Reception</code>, or <code>Transition</code>. Note that a block made against a reception attack (the attack made by the receiving team immediately after receiving the serve) is considered to be <code>Reception</code> phase, but the dig made by the blocking team immediately after that (and every subsequent action in the rally) are <code>Transition</code></li>
+</ul>
 
+</div>
 </div>
             </section>
 

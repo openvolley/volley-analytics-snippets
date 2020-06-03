@@ -28,7 +28,7 @@ This document provides some code snippets and guidance that might help you with 
 
 ## openvolley {-}
 
-The openvolley project aims to provide an open-source, freely available software ecosystem to support volleyball analytics. It consists of a family of add-on packages that can be used with the R software.
+The openvolley project aims to provide an open-source, freely available software ecosystem to support volleyball analytics. It consists of a family of add-on packages that can be used with the R software package. R provides an enormous range of data manipulation, analysis, modelling, and graphical display functionality, including the ability to build interactive data analysis and visualisation apps.
 
 See http://openvolley.org.
 

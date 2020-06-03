@@ -40,11 +40,15 @@ Read all of those files in a loop, extract the play-by-play component from each,
 
 ```{r readmult2, eval = FALSE}
 lx <- list()
-for (fi in seq_along(d)) lx[[fi]] <- plays(dv_read(d[fi], insert_technical_timeouts = FALSE))
-px <- do.call(rbind, lx)
+## read each file
+for (fi in seq_along(d)) lx[[fi]] <- dv_read(d[fi], insert_technical_timeouts = FALSE)
+## now extract the play-by-play component from each and bind them together
+px <- list()
+for (fi in seq_along(lx)) px[[fi]] <- plays(lx)
+px <- do.call(rbind, px)
 ```
 
-Note, the idiomatic R way to do this would be to use `lapply` instead of a `for` loop:
+Note, the idiomatic R way to do this would be to use `lapply` instead of `for` loops:
 
 ```{r readmult3, eval = FALSE}
 lx <- lapply(d, dv_read, insert_technical_timeouts = FALSE)
@@ -58,6 +62,8 @@ library(dplyr)
 px <- bind_rows(lapply(lx, plays))
 
 ```
+
+After these operations, we have `lx`, which is a list containing the full contents of every match file (including the match and team metadata), and `px`, which is just the play-by-play component of each (but all joined together, which makes it easy to analyze multiple matches at once).
 
 # File validation
 

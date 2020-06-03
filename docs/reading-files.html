@@ -142,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="reading-files.html"><a href="reading-files.html#reading-multiple-files"><i class="fa fa-check"></i><b>3.3</b> Reading multiple files</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="file-validation.html"><a href="file-validation.html"><i class="fa fa-check"></i><b>4</b> File validation</a></li>
-<li class="chapter" data-level="5" data-path="general-stuff.html"><a href="general-stuff.html"><i class="fa fa-check"></i><b>5</b> General stuff</a></li>
+<li class="chapter" data-level="5" data-path="general-notes-and-tips.html"><a href="general-notes-and-tips.html"><i class="fa fa-check"></i><b>5</b> General notes and tips</a></li>
 <li class="chapter" data-level="6" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>6</b> Court plots</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>6.1</b> Background on location information</a>
@@ -201,14 +201,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-2"><a href="reading-files.html#cb6-2"></a><span class="co">## if your files are in nested directories, add &#39;recursive = TRUE&#39; to the arguments</span></span></code></pre></div>
 <p>Read all of those files in a loop, extract the play-by-play component from each, and then join of those all together:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="reading-files.html#cb7-1"></a>lx &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
-<span id="cb7-2"><a href="reading-files.html#cb7-2"></a><span class="cf">for</span> (fi <span class="cf">in</span> <span class="kw">seq_along</span>(d)) lx[[fi]] &lt;-<span class="st"> </span><span class="kw">plays</span>(<span class="kw">dv_read</span>(d[fi], <span class="dt">insert_technical_timeouts =</span> <span class="ot">FALSE</span>))</span>
-<span id="cb7-3"><a href="reading-files.html#cb7-3"></a>px &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, lx)</span></code></pre></div>
-<p>Note, the idiomatic R way to do this would be to use <code>lapply</code> instead of a <code>for</code> loop:</p>
+<span id="cb7-2"><a href="reading-files.html#cb7-2"></a><span class="co">## read each file</span></span>
+<span id="cb7-3"><a href="reading-files.html#cb7-3"></a><span class="cf">for</span> (fi <span class="cf">in</span> <span class="kw">seq_along</span>(d)) lx[[fi]] &lt;-<span class="st"> </span><span class="kw">dv_read</span>(d[fi], <span class="dt">insert_technical_timeouts =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb7-4"><a href="reading-files.html#cb7-4"></a><span class="co">## now extract the play-by-play component from each and bind them together</span></span>
+<span id="cb7-5"><a href="reading-files.html#cb7-5"></a>px &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
+<span id="cb7-6"><a href="reading-files.html#cb7-6"></a><span class="cf">for</span> (fi <span class="cf">in</span> <span class="kw">seq_along</span>(lx)) px[[fi]] &lt;-<span class="st"> </span><span class="kw">plays</span>(lx)</span>
+<span id="cb7-7"><a href="reading-files.html#cb7-7"></a>px &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, px)</span></code></pre></div>
+<p>Note, the idiomatic R way to do this would be to use <code>lapply</code> instead of <code>for</code> loops:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="reading-files.html#cb8-1"></a>lx &lt;-<span class="st"> </span><span class="kw">lapply</span>(d, dv_read, <span class="dt">insert_technical_timeouts =</span> <span class="ot">FALSE</span>)</span>
 <span id="cb8-2"><a href="reading-files.html#cb8-2"></a>px &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, <span class="kw">lapply</span>(lx, plays))</span></code></pre></div>
 <p>It achieves the same thing. Use whichever you prefer. Similarly, you could also use dplyr’s <code>bind_rows</code> function instead of <code>do.call(rbind, ...)</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="reading-files.html#cb9-1"></a><span class="kw">library</span>(dplyr)</span>
 <span id="cb9-2"><a href="reading-files.html#cb9-2"></a>px &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="kw">lapply</span>(lx, plays))</span></code></pre></div>
+<p>After these operations, we have <code>lx</code>, which is a list containing the full contents of every match file (including the match and team metadata), and <code>px</code>, which is just the play-by-play component of each (but all joined together, which makes it easy to analyze multiple matches at once).</p>
 </div>
 </div>
             </section>
