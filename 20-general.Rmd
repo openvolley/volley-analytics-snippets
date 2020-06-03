@@ -1,0 +1,19 @@
+# General stuff
+
+**It may be better to use the `evaluation` column instead of the `evaluation_code` column for filtering and other data operations.**
+
+Different scouting conventions mean that the entries in the `evaluation_code` column don't always mean the same thing. For example, a block scouted as `B/` is an invasion (net touch or other violation) according to the default DataVolley conventions, but some scouts instead use `B/` to indicate a block tool, and others use it to indicate a poor block back to the opposition team. When a file is read into R with `dv_read`, the evaluation codes are converted into strings (stored in the `evaluation` column) following the conventions specified by the `skill_evaluation_decode` argument. Using the `evaluation` column is therefore likely to be more robust than the `evaluation_code` column, especially if your code is to be used on files collected by different scouts.
+
+For example, find block invasions by
+
+```{r eval = FALSE}
+x %>% dplyr::filter(skill == "Block" & evaluation == "Invasion")
+
+```
+
+rather than by
+
+```{r eval = FALSE}
+x %>% dplyr::filter(skill == "Block" & evaluation_code == "/")
+
+```

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 Court plots | Volleyball analytics snippets</title>
+  <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 Court plots | Volleyball analytics snippets" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://openvolley.github.io/volley-analytics-snippets/" />
+  <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets/images/cover.png" />
+  <meta property="og:description" content="Notes and snippets of R code for volleyball analytics" />
+  <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 Court plots | Volleyball analytics snippets" />
+  
+  <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
+  <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets/images/cover.png" />
+
+<meta name="author" content="Ben Raymond, Adrien Ickowicz" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="general-stuff.html"/>
+
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="journal.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#openvolley"><i class="fa fa-check"></i>openvolley</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> Setup</a></li>
+<li class="chapter" data-level="3" data-path="reading-files.html"><a href="reading-files.html"><i class="fa fa-check"></i><b>3</b> Reading files</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="reading-files.html"><a href="reading-files.html#datavolley"><i class="fa fa-check"></i><b>3.1</b> DataVolley</a></li>
+<li class="chapter" data-level="3.2" data-path="reading-files.html"><a href="reading-files.html#vbstats"><i class="fa fa-check"></i><b>3.2</b> VBStats</a></li>
+<li class="chapter" data-level="3.3" data-path="reading-files.html"><a href="reading-files.html#reading-multiple-files"><i class="fa fa-check"></i><b>3.3</b> Reading multiple files</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="file-validation.html"><a href="file-validation.html"><i class="fa fa-check"></i><b>4</b> File validation</a></li>
+<li class="chapter" data-level="5" data-path="general-stuff.html"><a href="general-stuff.html"><i class="fa fa-check"></i><b>5</b> General stuff</a></li>
+<li class="chapter" data-level="6" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>6</b> Court plots</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>6.1</b> Background on location information</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>6.1.1</b> Zones and subzones</a></li>
+<li class="chapter" data-level="6.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>6.1.2</b> Coordinates</a></li>
+<li class="chapter" data-level="6.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>6.1.3</b> VBStats</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>6.2</b> Plotting by zone or subzone</a></li>
+<li class="chapter" data-level="6.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>6.3</b> Plotting by line segment</a></li>
+<li class="chapter" data-level="6.4" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>6.4</b> Heatmaps</a></li>
+<li class="chapter" data-level="6.5" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>6.5</b> Changing direction</a></li>
+<li class="chapter" data-level="6.6" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>6.6</b> Plotting mid-coordinates</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Volleyball analytics snippets</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="court-plots" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Court plots</h1>
+<div id="background-on-location-information" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Background on location information</h2>
+<div id="zones-and-subzones" class="section level3" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Zones and subzones</h3>
+<p>Scouts using DataVolley make use of zones (and optionally subzones) for all skills. Cones can alternatively be used for attack directions (instead of recording the end zone). Attacks cannot be scouted with both zones <em>and</em> cones in one file, DataVolley supports only one or the other. The zone/cone associated with each action is stored in the DataVolley file as the zone/cone number, without any inherent direction (side of the court) and without any actual location information. To plot the location of an action on a court diagram, we first generate actual court coordinates using the <code>dv_xy()</code> function. We pass it the zone number and which end of the court diagram (upper or lower) we wish to plot onto — let’s say an action from zone 4:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="court-plots.html#cb13-1"></a><span class="kw">dv_xy</span>(<span class="dt">zones =</span> <span class="dv">4</span>, <span class="dt">end =</span> <span class="st">&quot;lower&quot;</span>)</span>
+<span id="cb13-2"><a href="court-plots.html#cb13-2"></a><span class="co">#&gt;   x y</span></span>
+<span id="cb13-3"><a href="court-plots.html#cb13-3"></a><span class="co">#&gt; 1 1 3</span></span></code></pre></div>
+<p>So zone 4 is located at <code>x = 1</code> and <code>y = 3</code>. The coordinate system used by <code>openvolley</code> packages looks like this:</p>
+<p><img src="_main_files/figure-html/courtexample-1.png" width="672" /></p>
+</div>
+<div id="coordinates" class="section level3" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Coordinates</h3>
+<p>Actions can also be scouted with coordinates (the more precise locations, that are entered with the mouse click on the small court diagram). These are stored separately to the zone information in the DataVolley file. Coordinates can be used alongside of zones or cones, but not all scouts use coordinates. Coordinates are stored in the file as a single index from 1-10000, where 1 starts in the bottom-left on the lower side of the court diagram, across the row to 100 at the bottom-right, and it fills row-wise until 9901 is the top-left on the upper side of the court diagram and 10000 is the top-right. That covers both sides of the court, so coordinates are stored in the dvw file with an actual court location (and side) associated with them.</p>
+<p>When a DataVolley file is read into R using <code>dv_read</code>, these coordinates are stored without alteration in the <code>start_coordinate</code>, <code>mid_coordinate</code>, and <code>end_coordinate</code> columns. They are also converted to the same reference system shown above (using the <code>dv_index2xy()</code> function), and these values stored in the <code>start_coordinate_x</code>, <code>start_coordinate_y</code>, <code>mid_coordinate_x</code>, <code>mid_coordinate_y</code>, <code>end_coordinate_x</code>, and <code>end_coordinate_y</code> columns.</p>
+</div>
+<div id="vbstats-1" class="section level3" number="6.1.3">
+<h3><span class="header-section-number">6.1.3</span> VBStats</h3>
+<p>VBStats files use only coordinates internally, and on a different native grid to the DataVolley grid. When a VBStats file is read into R using the <code>pv_read</code> function, these coordinates are converted to the same coordinate system used above. Each coordinate is also converted to its corresponding zone and subzone, so these are also available when using VBStats files in R, even though VBStats itself doesn’t allow scouting with zones and subzones.</p>
+</div>
+</div>
+<div id="plotting-by-zone-or-subzone" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Plotting by zone or subzone</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="court-plots.html#cb14-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb14-2"><a href="court-plots.html#cb14-2"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb14-3"><a href="court-plots.html#cb14-3"></a></span>
+<span id="cb14-4"><a href="court-plots.html#cb14-4"></a>x &lt;-<span class="st"> </span><span class="kw">dv_read</span>(<span class="kw">dv_example_file</span>(<span class="dv">1</span>))</span>
+<span id="cb14-5"><a href="court-plots.html#cb14-5"></a></span>
+<span id="cb14-6"><a href="court-plots.html#cb14-6"></a><span class="co">## calculate attack frequency by zone, per team</span></span>
+<span id="cb14-7"><a href="court-plots.html#cb14-7"></a>attack_rate &lt;-<span class="st"> </span><span class="kw">plays</span>(x) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Attack&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb14-8"><a href="court-plots.html#cb14-8"></a><span class="st">    </span><span class="kw">group_by</span>(team, start_zone) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">summarize</span>(<span class="dt">n_attacks =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb14-9"><a href="court-plots.html#cb14-9"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">rate =</span> n_attacks<span class="op">/</span><span class="kw">sum</span>(n_attacks)) <span class="op">%&gt;%</span><span class="st"> </span>ungroup</span>
+<span id="cb14-10"><a href="court-plots.html#cb14-10"></a></span>
+<span id="cb14-11"><a href="court-plots.html#cb14-11"></a><span class="co">## add x, y coordinates associated with the zones</span></span>
+<span id="cb14-12"><a href="court-plots.html#cb14-12"></a>attack_rate &lt;-<span class="st"> </span><span class="kw">cbind</span>(attack_rate, <span class="kw">dv_xy</span>(attack_rate<span class="op">$</span>start_zone, <span class="dt">end =</span> <span class="st">&quot;lower&quot;</span>))</span>
+<span id="cb14-13"><a href="court-plots.html#cb14-13"></a><span class="co">## additionally specify the subzone to dv_xy if you want to plot by subzone (and your data</span></span>
+<span id="cb14-14"><a href="court-plots.html#cb14-14"></a><span class="co">##   were scouted with subzones)</span></span>
+<span id="cb14-15"><a href="court-plots.html#cb14-15"></a></span>
+<span id="cb14-16"><a href="court-plots.html#cb14-16"></a><span class="co">## for team 2, these need to be on the top half of the diagram</span></span>
+<span id="cb14-17"><a href="court-plots.html#cb14-17"></a>tm2i &lt;-<span class="st"> </span>attack_rate<span class="op">$</span>team <span class="op">==</span><span class="st"> </span><span class="kw">teams</span>(x)[<span class="dv">2</span>]</span>
+<span id="cb14-18"><a href="court-plots.html#cb14-18"></a>attack_rate[tm2i, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)] &lt;-<span class="st"> </span><span class="kw">dv_flip_xy</span>(attack_rate[tm2i, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)])</span>
+<span id="cb14-19"><a href="court-plots.html#cb14-19"></a></span>
+<span id="cb14-20"><a href="court-plots.html#cb14-20"></a><span class="kw">ggplot</span>(attack_rate, <span class="kw">aes</span>(x, y, <span class="dt">fill =</span> rate)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggcourt</span>(<span class="dt">labels =</span> <span class="kw">teams</span>(x)) <span class="op">+</span></span>
+<span id="cb14-21"><a href="court-plots.html#cb14-21"></a><span class="st">    </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">name =</span> <span class="st">&quot;Attack rate&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/cp1-1.png" width="672" /></p>
+</div>
+<div id="plotting-by-line-segment" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Plotting by line segment</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="court-plots.html#cb15-1"></a><span class="co">## take just the serves from the play-by-play data</span></span>
+<span id="cb15-2"><a href="court-plots.html#cb15-2"></a>xserves &lt;-<span class="st"> </span><span class="kw">subset</span>(<span class="kw">plays</span>(x), skill <span class="op">==</span><span class="st"> &quot;Serve&quot;</span>)</span>
+<span id="cb15-3"><a href="court-plots.html#cb15-3"></a></span>
+<span id="cb15-4"><a href="court-plots.html#cb15-4"></a><span class="co">## if the file had been scouted with coordinates included, we could plot them directly</span></span>
+<span id="cb15-5"><a href="court-plots.html#cb15-5"></a><span class="co">## this file has no coordinates, so we&#39;ll fake some up for demo purposes</span></span>
+<span id="cb15-6"><a href="court-plots.html#cb15-6"></a>coords &lt;-<span class="st"> </span><span class="kw">dv_fake_coordinates</span>(<span class="st">&quot;serve&quot;</span>, xserves<span class="op">$</span>evaluation)</span>
+<span id="cb15-7"><a href="court-plots.html#cb15-7"></a>xserves[, <span class="kw">c</span>(<span class="st">&quot;start_coordinate&quot;</span>, <span class="st">&quot;start_coordinate_x&quot;</span>, <span class="st">&quot;start_coordinate_y&quot;</span>,</span>
+<span id="cb15-8"><a href="court-plots.html#cb15-8"></a>            <span class="st">&quot;end_coordinate&quot;</span>, <span class="st">&quot;end_coordinate_x&quot;</span>, <span class="st">&quot;end_coordinate_y&quot;</span>)] &lt;-<span class="st"> </span>coords</span>
+<span id="cb15-9"><a href="court-plots.html#cb15-9"></a></span>
+<span id="cb15-10"><a href="court-plots.html#cb15-10"></a><span class="co">## now we can plot these</span></span>
+<span id="cb15-11"><a href="court-plots.html#cb15-11"></a>xserves<span class="op">$</span>evaluation[<span class="op">!</span>xserves<span class="op">$</span>evaluation <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Ace&quot;</span>, <span class="st">&quot;Error&quot;</span>)] &lt;-<span class="st"> &quot;Other&quot;</span></span>
+<span id="cb15-12"><a href="court-plots.html#cb15-12"></a></span>
+<span id="cb15-13"><a href="court-plots.html#cb15-13"></a><span class="kw">ggplot</span>(xserves, <span class="kw">aes</span>(start_coordinate_x, start_coordinate_y,</span>
+<span id="cb15-14"><a href="court-plots.html#cb15-14"></a>       <span class="dt">xend =</span> end_coordinate_x, <span class="dt">yend =</span> end_coordinate_y, <span class="dt">colour =</span> evaluation)) <span class="op">+</span></span>
+<span id="cb15-15"><a href="court-plots.html#cb15-15"></a><span class="st">    </span><span class="kw">geom_segment</span>(<span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="dv">2</span>, <span class="st">&quot;mm&quot;</span>), <span class="dt">type =</span> <span class="st">&quot;closed&quot;</span>, <span class="dt">angle =</span> <span class="dv">20</span>)) <span class="op">+</span></span>
+<span id="cb15-16"><a href="court-plots.html#cb15-16"></a><span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Ace =</span> <span class="st">&quot;limegreen&quot;</span>, <span class="dt">Error =</span> <span class="st">&quot;firebrick&quot;</span>, <span class="dt">Other =</span> <span class="st">&quot;dodgerblue&quot;</span>),</span>
+<span id="cb15-17"><a href="court-plots.html#cb15-17"></a>                        <span class="dt">name =</span> <span class="st">&quot;Evaluation&quot;</span>) <span class="op">+</span></span>
+<span id="cb15-18"><a href="court-plots.html#cb15-18"></a><span class="st">    </span><span class="kw">ggcourt</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Serving team&quot;</span>, <span class="st">&quot;Receiving team&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/cp2-1.png" width="672" /></p>
+</div>
+<div id="heatmaps" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Heatmaps</h2>
+<p>Heatmap-style plots can be generated using a kernel density estimator. This takes a discrete number of location observations and attempts to estimate their corresponding (continuous) distribution across the court.</p>
+<p>For example, take these attack ending coordinates:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="court-plots.html#cb16-1"></a><span class="kw">ggplot</span>(x <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Attack&quot;</span>), <span class="kw">aes</span>(end_coordinate_x, end_coordinate_y)) <span class="op">+</span></span>
+<span id="cb16-2"><a href="court-plots.html#cb16-2"></a><span class="st">  </span><span class="kw">ggcourt</span>(<span class="dt">labels =</span> <span class="ot">NULL</span>, <span class="dt">court =</span> <span class="st">&quot;upper&quot;</span>) <span class="op">+</span></span>
+<span id="cb16-3"><a href="court-plots.html#cb16-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/hm2-1.png" width="672" /></p>
+<p>As a heatmap:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="court-plots.html#cb17-1"></a><span class="kw">ggplot</span>(x <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Attack&quot;</span>), <span class="kw">aes</span>(end_coordinate_x, end_coordinate_y)) <span class="op">+</span></span>
+<span id="cb17-2"><a href="court-plots.html#cb17-2"></a><span class="st">  </span><span class="kw">stat_density_2d</span>(<span class="dt">geom =</span> <span class="st">&quot;raster&quot;</span>, <span class="kw">aes_string</span>(<span class="dt">fill =</span> <span class="st">&quot;..density..&quot;</span>), <span class="dt">contour =</span> <span class="ot">FALSE</span>, <span class="dt">h =</span> <span class="fl">0.85</span>, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">60</span>, <span class="dv">120</span>)) <span class="op">+</span></span>
+<span id="cb17-3"><a href="court-plots.html#cb17-3"></a><span class="st">  </span><span class="kw">scale_fill_distiller</span>(<span class="dt">palette =</span> <span class="st">&quot;Spectral&quot;</span>, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb17-4"><a href="court-plots.html#cb17-4"></a><span class="st">  </span><span class="kw">ggcourt</span>(<span class="dt">labels =</span> <span class="ot">NULL</span>, <span class="dt">court =</span> <span class="st">&quot;upper&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/hm3-1.png" width="672" /></p>
+<p>The <code>h</code> parameter controls the smoothness of the heatmap (this is the bandwidth of the kernel density estimator). If you need more control over the heatmap, you may need to call e.g. <code>MASS::kde2d()</code> directly to construct the heatmap layer and plot it with <code>geom_tile</code>.</p>
+</div>
+<div id="changing-direction" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> Changing direction</h2>
+<p>Coordinates might not appear in the dvw file in any particular orientation (i.e. starting consistently on one side of the court).</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="court-plots.html#cb18-1"></a>xattack &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Attack&quot;</span>)</span>
+<span id="cb18-2"><a href="court-plots.html#cb18-2"></a><span class="kw">ggplot</span>(xattack, <span class="kw">aes</span>(start_coordinate_x, start_coordinate_y, <span class="dt">xend =</span> end_coordinate_x, <span class="dt">yend =</span> end_coordinate_y)) <span class="op">+</span><span class="st"> </span><span class="kw">ggcourt</span>(<span class="dt">labels =</span> <span class="ot">NULL</span>) <span class="op">+</span></span>
+<span id="cb18-3"><a href="court-plots.html#cb18-3"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">colour =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/coordflip1-1.png" width="672" /></p>
+<p>If we wish to plot all attacks so that they start on the same side of the court, we first need to figure out which ones need to be flipped around. The centre line of the court is at <code>y = 3.5</code>, so we can find any attacks that start on the upper side:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="court-plots.html#cb19-1"></a>toflip &lt;-<span class="st"> </span><span class="kw">which</span>(xattack<span class="op">$</span>start_coordinate_y <span class="op">&gt;</span><span class="st"> </span><span class="fl">3.5</span>)</span></code></pre></div>
+<p>And then flip just those attacks so that they start on the lower half of the court:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="court-plots.html#cb20-1"></a>xattack<span class="op">$</span>start_coordinate_x[toflip] &lt;-<span class="st"> </span><span class="kw">dv_flip_x</span>(xattack<span class="op">$</span>start_coordinate_x[toflip])</span>
+<span id="cb20-2"><a href="court-plots.html#cb20-2"></a>xattack<span class="op">$</span>start_coordinate_y[toflip] &lt;-<span class="st"> </span><span class="kw">dv_flip_y</span>(xattack<span class="op">$</span>start_coordinate_y[toflip])</span>
+<span id="cb20-3"><a href="court-plots.html#cb20-3"></a>xattack<span class="op">$</span>mid_coordinate_x[toflip] &lt;-<span class="st"> </span><span class="kw">dv_flip_x</span>(xattack<span class="op">$</span>mid_coordinate_x[toflip])</span>
+<span id="cb20-4"><a href="court-plots.html#cb20-4"></a>xattack<span class="op">$</span>mid_coordinate_y[toflip] &lt;-<span class="st"> </span><span class="kw">dv_flip_y</span>(xattack<span class="op">$</span>mid_coordinate_y[toflip])</span>
+<span id="cb20-5"><a href="court-plots.html#cb20-5"></a>xattack<span class="op">$</span>end_coordinate_x[toflip] &lt;-<span class="st"> </span><span class="kw">dv_flip_x</span>(xattack<span class="op">$</span>end_coordinate_x[toflip])</span>
+<span id="cb20-6"><a href="court-plots.html#cb20-6"></a>xattack<span class="op">$</span>end_coordinate_y[toflip] &lt;-<span class="st"> </span><span class="kw">dv_flip_y</span>(xattack<span class="op">$</span>end_coordinate_y[toflip])</span></code></pre></div>
+<p>Or a little more succinctly using dplyr functions:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="court-plots.html#cb21-1"></a>xattack[toflip, ] &lt;-<span class="st"> </span>xattack[toflip, ] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate_at</span>(<span class="kw">c</span>(<span class="st">&quot;start_coordinate_x&quot;</span>, <span class="st">&quot;mid_coordinate_x&quot;</span>, <span class="st">&quot;end_coordinate_x&quot;</span>), dv_flip_x) <span class="op">%&gt;%</span></span>
+<span id="cb21-2"><a href="court-plots.html#cb21-2"></a><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">c</span>(<span class="st">&quot;start_coordinate_y&quot;</span>, <span class="st">&quot;mid_coordinate_y&quot;</span>, <span class="st">&quot;end_coordinate_y&quot;</span>), dv_flip_y)</span></code></pre></div>
+<p>Now plot it:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="court-plots.html#cb22-1"></a><span class="kw">ggplot</span>(xattack, <span class="kw">aes</span>(start_coordinate_x, start_coordinate_y, <span class="dt">xend =</span> end_coordinate_x, <span class="dt">yend =</span> end_coordinate_y)) <span class="op">+</span><span class="st"> </span><span class="kw">ggcourt</span>(<span class="dt">labels =</span> <span class="ot">NULL</span>) <span class="op">+</span></span>
+<span id="cb22-2"><a href="court-plots.html#cb22-2"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">colour =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/coordflip5-1.png" width="672" /></p>
+</div>
+<div id="plotting-mid-coordinates" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span> Plotting mid-coordinates</h2>
+<p>The <code>mid</code> coordinates can be used by the scout to indicate e.g. an attack that deflected off the block. In these cases, it can be misleading to plot just the start and end locations connected by a straight line segment. Consider an attack that came off the block and went back into the attacker’s court — by plotting just the start and end points it would appear to go directly backwards.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="court-plots.html#cb23-1"></a><span class="co">## example data</span></span>
+<span id="cb23-2"><a href="court-plots.html#cb23-2"></a>x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start_coordinate_x =</span> <span class="kw">c</span>(<span class="fl">0.75</span>, <span class="fl">0.8</span>), <span class="dt">start_coordinate_y =</span> <span class="kw">c</span>(<span class="fl">3.25</span>, <span class="fl">3.25</span>),</span>
+<span id="cb23-3"><a href="court-plots.html#cb23-3"></a>                <span class="dt">mid_coordinate_x =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="fl">1.4</span>), <span class="dt">mid_coordinate_y =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="fl">3.5</span>),</span>
+<span id="cb23-4"><a href="court-plots.html#cb23-4"></a>                <span class="dt">end_coordinate_x =</span> <span class="kw">c</span>(<span class="fl">1.1</span>, <span class="dv">2</span>), <span class="dt">end_coordinate_y =</span> <span class="kw">c</span>(<span class="fl">5.5</span>, <span class="fl">1.5</span>))</span>
+<span id="cb23-5"><a href="court-plots.html#cb23-5"></a></span>
+<span id="cb23-6"><a href="court-plots.html#cb23-6"></a><span class="kw">ggplot</span>(x, <span class="kw">aes</span>(start_coordinate_x, start_coordinate_y, <span class="dt">xend =</span> end_coordinate_x, <span class="dt">yend =</span> end_coordinate_y)) <span class="op">+</span><span class="st"> </span><span class="kw">ggcourt</span>(<span class="dt">labels =</span> <span class="ot">NULL</span>) <span class="op">+</span></span>
+<span id="cb23-7"><a href="court-plots.html#cb23-7"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">colour =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb23-8"><a href="court-plots.html#cb23-8"></a>               <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="dv">2</span>, <span class="st">&quot;mm&quot;</span>), <span class="dt">type =</span> <span class="st">&quot;closed&quot;</span>, <span class="dt">angle =</span> <span class="dv">20</span>, <span class="dt">ends =</span> <span class="st">&quot;last&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/midcoord-1.png" width="672" /></p>
+<p>In these cases it is better to plot the mid point as well, but we need to cope with the fact that some mid-coordinates will be missing (<code>NA</code>):</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="court-plots.html#cb24-1"></a><span class="kw">ggplot</span>(x, <span class="kw">aes</span>(start_coordinate_x, start_coordinate_y, <span class="dt">xend =</span> end_coordinate_x, <span class="dt">yend =</span> end_coordinate_y)) <span class="op">+</span><span class="st"> </span><span class="kw">ggcourt</span>(<span class="dt">labels =</span> <span class="ot">NULL</span>) <span class="op">+</span></span>
+<span id="cb24-2"><a href="court-plots.html#cb24-2"></a><span class="st">  </span><span class="co">## lines with no midpoint</span></span>
+<span id="cb24-3"><a href="court-plots.html#cb24-3"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> x[<span class="kw">is.na</span>(x<span class="op">$</span>mid_coordinate_x), ], <span class="dt">colour =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb24-4"><a href="court-plots.html#cb24-4"></a>               <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="dv">2</span>, <span class="st">&quot;mm&quot;</span>), <span class="dt">type =</span> <span class="st">&quot;closed&quot;</span>, <span class="dt">angle =</span> <span class="dv">20</span>, <span class="dt">ends =</span> <span class="st">&quot;last&quot;</span>)) <span class="op">+</span></span>
+<span id="cb24-5"><a href="court-plots.html#cb24-5"></a><span class="st">  </span><span class="co">## start to mid for lines with midpoint, no ending arrow</span></span>
+<span id="cb24-6"><a href="court-plots.html#cb24-6"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> x[<span class="op">!</span><span class="kw">is.na</span>(x<span class="op">$</span>mid_coordinate_x), ], <span class="kw">aes</span>(<span class="dt">xend =</span> mid_coordinate_x, <span class="dt">yend =</span> mid_coordinate_y), <span class="dt">colour =</span> <span class="st">&quot;dodgerblue&quot;</span>) <span class="op">+</span></span>
+<span id="cb24-7"><a href="court-plots.html#cb24-7"></a><span class="st">  </span><span class="co">## mid to end for lines with midpoint</span></span>
+<span id="cb24-8"><a href="court-plots.html#cb24-8"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> x[<span class="op">!</span><span class="kw">is.na</span>(x<span class="op">$</span>mid_coordinate_x), ], <span class="kw">aes</span>(<span class="dt">x =</span> mid_coordinate_x, <span class="dt">y =</span> mid_coordinate_y), <span class="dt">colour =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb24-9"><a href="court-plots.html#cb24-9"></a>               <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="dv">2</span>, <span class="st">&quot;mm&quot;</span>), <span class="dt">type =</span> <span class="st">&quot;closed&quot;</span>, <span class="dt">angle =</span> <span class="dv">20</span>, <span class="dt">ends =</span> <span class="st">&quot;last&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/midcoord2-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="general-stuff.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>

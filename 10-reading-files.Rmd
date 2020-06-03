@@ -1,0 +1,78 @@
+# Reading files
+
+## DataVolley
+
+```{r read1, eval = FALSE}
+library(datavolley)
+filename <- "c:/my/filename.dvw"
+x <- dv_read(filename)
+
+```
+
+The `dv_read` function has a number of optional parameters. The most important are probably:
+
+- `insert_technical_timeouts`. By default, technical timeouts will be inserted at points 8 and 16 of sets 1--4 (for indoor files) or when the team scores sum to 21 in sets 1--2 (beach). You can avoid inserting technical timeouts by setting this to `FALSE`, or change the scores at which TTs are inserted (see `dv_read` function help)
+
+- `skill_evaluation_decode`. By default, `dv_read` uses the standard DataVolley scouting conventions. This controls the interpretation of the evaluation codes (e.g. `B/` is a block invasion (net touch or other violation)). However, not all scouts use these conventions. VolleyMetrics, for example, use `B/` to mean a poor block that the opposition can replay (amongst other convention differences). In Germany, `B/` is usually used to indicate a block tool (attack off the block for a kill) and `B=` is used to indicate an invasion. You can tell the `dv_read` function to follow these conventions by `dv_read(..., skill_evaluation_decode = "volleymetrics")` or `dv_read(..., skill_evaluation_decode = "german")`. If your files use other scouting conventions, you can write your own decoder (see `dv_read` function help)
+
+- `date_format`. Dates can be ambiguous in DataVolley files, and sometimes they will be parsed incorrectly (e.g. swapping month and day). If the dates in your files are being read incorrectly you can set the expected format, e.g. `dv_read(..., date_format = "dmy")` or `dv_read(..., date_format = "mdy")`.
+
+- `encoding` specifies the text encoding of the file. By default this will be guessed, but if the text encoding is guessed incorrectly then player/team names might appear garbled (e.g. accented characters wrong) and in extreme cases the file might refuse to read altogether. You can get an idea of what is going on with text encoding by asking for verbose output: `dv_read(..., verbose = TRUE)`. You can set the text encoding by e.g. `dv_read(..., encoding = "windows-1252")`
+
+## VBStats
+
+```{r read2, eval = FALSE}
+library(peranavolley)
+x <- pv_read("c:/my/filename.psvb")
+
+```
+
+## Reading multiple files
+
+You might want to read multiple files in and analyze them all together. First find all of the DataVolley files in the target directory:
+
+```{r readmult1, eval = FALSE}
+d <- dir("c:/data", pattern = "dvw$", full.names = TRUE)
+## if your files are in nested directories, add 'recursive = TRUE' to the arguments
+```
+
+Read all of those files in a loop, extract the play-by-play component from each, and then join of those all together:
+
+```{r readmult2, eval = FALSE}
+lx <- list()
+for (fi in seq_along(d)) lx[[fi]] <- plays(dv_read(d[fi], insert_technical_timeouts = FALSE))
+px <- do.call(rbind, lx)
+```
+
+Note, the idiomatic R way to do this would be to use `lapply` instead of a `for` loop:
+
+```{r readmult3, eval = FALSE}
+lx <- lapply(d, dv_read, insert_technical_timeouts = FALSE)
+px <- do.call(rbind, lapply(lx, plays))
+```
+
+It achieves the same thing. Use whichever you prefer. Similarly, you could also use dplyr's `bind_rows` function instead of `do.call(rbind, ...)`:
+
+```{r readmult4, eval = FALSE}
+library(dplyr)
+px <- bind_rows(lapply(lx, plays))
+
+```
+
+# File validation
+
+Check the `messages` component of a datavolley or peranavolley object for the results of file validation and checking. This can help improve the consistency of your files and therefore of any subsequent analyses that you might conduct.
+
+```{r val1, eval = FALSE}
+x <- dv_read(dv_example_file(2))
+x$messages
+
+```
+
+```{r val2, echo = FALSE}
+x <- dv_read(dv_example_file(2))
+knitr::kable(x$messages)
+
+```
+
+Note that not all warnings will necessarily correspond to actual scouting errors. This particular file was scouted without all actions (in particular, not all setting actions). The warnings about "Consecutive actions by the same player" are to do with a player receiving or digging the ball and then making the next attack (but the intervening set action was not scouted). This probably doesn't matter, so long as you are aware of this when analyzing the files.

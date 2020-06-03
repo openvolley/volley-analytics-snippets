@@ -1,0 +1,53 @@
+---
+title: Volleyball analytics snippets
+author: Ben Raymond, Adrien Ickowicz
+description: Notes and snippets of R code for volleyball analytics
+output:
+  bookdown::gitbook:
+    css: journal.css
+    config:
+      toc:
+        collapse: section
+        scroll_highlight: yes
+    sharing:
+      twitter: yes
+      facebook: no
+    fontsettings:
+      theme: Night
+documentclass: book
+site: bookdown::bookdown_site
+url: 'https\://openvolley.github.io/volley-analytics-snippets/'
+github-repo: "openvolley/volley-analytics-snippets"
+cover-image: "images/cover.png"
+
+---
+
+# Introduction
+
+This document provides some code snippets and guidance that might help you with volleyball analytics in R, and in particular with the `openvolley` family of packages.
+
+## openvolley {-}
+
+The openvolley project aims to provide an open-source, freely available software ecosystem to support volleyball analytics. It consists of a family of add-on packages that can be used with the R software.
+
+See http://openvolley.org.
+
+## Acknowledgements {-}
+
+
+
+
+```{r mainsetup, include = FALSE}
+#    bookdown::html_book:
+#        includes:
+#            in_header: styles.css
+library(knitr)
+library(kableExtra)
+library(formattable)
+library(dplyr)
+
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE, comment = "#>", warning = FALSE, message = FALSE)
+
+## \@ref(...)
+
+```
