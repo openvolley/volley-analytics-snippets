@@ -148,8 +148,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="general-notes-and-tips.html"><a href="general-notes-and-tips.html"><i class="fa fa-check"></i><b>5</b> General notes and tips</a></li>
 <li class="chapter" data-level="6" data-path="data-augmentation.html"><a href="data-augmentation.html"><i class="fa fa-check"></i><b>6</b> Data augmentation</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="data-augmentation.html"><a href="data-augmentation.html#setter-player-ids"><i class="fa fa-check"></i><b>6.1</b> Setter player IDs</a></li>
-<li class="chapter" data-level="6.2" data-path="data-augmentation.html"><a href="data-augmentation.html#reception-quality"><i class="fa fa-check"></i><b>6.2</b> Reception quality</a></li>
+<li class="chapter" data-level="6.1" data-path="data-augmentation.html"><a href="data-augmentation.html#the-setter-of-a-given-attack"><i class="fa fa-check"></i><b>6.1</b> The setter of a given attack</a></li>
+<li class="chapter" data-level="6.2" data-path="data-augmentation.html"><a href="data-augmentation.html#setter-player-ids"><i class="fa fa-check"></i><b>6.2</b> Setter player IDs</a></li>
+<li class="chapter" data-level="6.3" data-path="data-augmentation.html"><a href="data-augmentation.html#reception-quality"><i class="fa fa-check"></i><b>6.3</b> Reception quality</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html"><i class="fa fa-check"></i><b>7</b> Filtering and subsetting</a>
 <ul>
@@ -192,8 +193,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="odds-and-ends" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Odds and ends</h1>
 <p>To be moved elsewhere in the document …</p>
-<div id="counting-the-number-of-sets-played-by-a-team" class="section level4" number="9.0.0.1">
-<h4><span class="header-section-number">9.0.0.1</span> Counting the number of sets played by a team</h4>
+<div id="counting-the-number-of-sets-played-by-a-team" class="section level4 unnumbered" number="">
+<h4>Counting the number of sets played by a team</h4>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="odds-and-ends.html#cb35-1"></a>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(team)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(team, match_id, set_number) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(team)</span></code></pre></div>
 
 </div>

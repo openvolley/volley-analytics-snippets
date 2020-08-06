@@ -148,8 +148,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="general-notes-and-tips.html"><a href="general-notes-and-tips.html"><i class="fa fa-check"></i><b>5</b> General notes and tips</a></li>
 <li class="chapter" data-level="6" data-path="data-augmentation.html"><a href="data-augmentation.html"><i class="fa fa-check"></i><b>6</b> Data augmentation</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="data-augmentation.html"><a href="data-augmentation.html#setter-player-ids"><i class="fa fa-check"></i><b>6.1</b> Setter player IDs</a></li>
-<li class="chapter" data-level="6.2" data-path="data-augmentation.html"><a href="data-augmentation.html#reception-quality"><i class="fa fa-check"></i><b>6.2</b> Reception quality</a></li>
+<li class="chapter" data-level="6.1" data-path="data-augmentation.html"><a href="data-augmentation.html#the-setter-of-a-given-attack"><i class="fa fa-check"></i><b>6.1</b> The setter of a given attack</a></li>
+<li class="chapter" data-level="6.2" data-path="data-augmentation.html"><a href="data-augmentation.html#setter-player-ids"><i class="fa fa-check"></i><b>6.2</b> Setter player IDs</a></li>
+<li class="chapter" data-level="6.3" data-path="data-augmentation.html"><a href="data-augmentation.html#reception-quality"><i class="fa fa-check"></i><b>6.3</b> Reception quality</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html"><i class="fa fa-check"></i><b>7</b> Filtering and subsetting</a>
 <ul>
@@ -192,11 +193,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="data-augmentation" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Data augmentation</h1>
 <p>Adding extra columns to our play-by-play data to make other data-wrangling tasks easier.</p>
-<p>Identify the player who made the set associated with each attack (noting that some files might not have this coded for all attacks, or even coded at all):</p>
+<div id="the-setter-of-a-given-attack" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> The setter of a given attack</h2>
+<p>Identify the player who made the set associated with each attack (noting that some files might not have the setting action coded for all attacks, or even coded at all):</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-augmentation.html#cb14-1"></a>px &lt;-<span class="st"> </span>px <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">set_player_id =</span> <span class="kw">case_when</span>(skill <span class="op">==</span><span class="st"> &quot;Attack&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">lag</span>(skill) <span class="op">==</span><span class="st"> &quot;Set&quot;</span> <span class="op">&amp;</span><span class="st"> </span>team <span class="op">==</span><span class="st"> </span><span class="kw">lag</span>(team) <span class="op">~</span><span class="st"> </span><span class="kw">lag</span>(player_id))</span></code></pre></div>
 <p>(The <code>set_player_id</code> column will be <code>NA</code> when there is no matching set coded before the attack.)</p>
-<div id="setter-player-ids" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Setter player IDs</h2>
+</div>
+<div id="setter-player-ids" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Setter player IDs</h2>
 <p>Say that we want to identify the <code>player_id</code> of the setter on court for each data row. The play-by-play data frame has <code>home_player_id1</code>, <code>home_player_id2</code>, …, <code>home_player_id6</code>, which give the <code>player_id</code> of the home team player currently in position 1, 2, …, and 6. It also has a <code>home_setter_position</code> column, which tells us which position the home team setter is in (1–6). So to create a <code>home_setter_id</code> column we simply need to extract the value in the <code>home_player_idX</code> column for each row of the data frame, where <code>X</code> is the value in the <code>home_setter_position</code> at each row.</p>
 <p>One way to do this is:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="data-augmentation.html#cb15-1"></a>px &lt;-<span class="st"> </span>px <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">home_setter_id =</span> <span class="kw">case_when</span>(home_setter_position <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> </span>home_player_id1,</span>
@@ -208,8 +212,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>But that is rather cumbersome and inelegant. A more concise method is:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-augmentation.html#cb16-1"></a>px &lt;-<span class="st"> </span>px <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">home_setter_id =</span> <span class="kw">cur_data</span>()[[<span class="kw">paste0</span>(<span class="st">&quot;home_player_id&quot;</span>, home_setter_position)]]) <span class="op">%&gt;%</span><span class="st"> </span>ungroup</span></code></pre></div>
 </div>
-<div id="reception-quality" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Reception quality</h2>
+<div id="reception-quality" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Reception quality</h2>
 <p>We want to add a column that tells us the reception quality associated with each rally. The reception quality for a given rally is found in the <code>evaluation</code> column of the row that has the <code>skill</code> value of “Reception”. We just need to propagate this value to all other rows associated with that particular rally.</p>
 <p>First we extract the reception quality for each rally (remember from the <a href="general-notes-and-tips.html#identifiers">Identifiers</a> section that the <code>point_id</code> value identifies the rally, but needs to be combined with <code>match_id</code> to be globally unique):</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-augmentation.html#cb17-1"></a>rq &lt;-<span class="st"> </span>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Reception&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(match_id, point_id) <span class="op">%&gt;%</span></span>

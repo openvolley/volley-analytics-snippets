@@ -2,7 +2,9 @@
 
 Adding extra columns to our play-by-play data to make other data-wrangling tasks easier.
 
-Identify the player who made the set associated with each attack (noting that some files might not have this coded for all attacks, or even coded at all):
+## The setter of a given attack
+
+Identify the player who made the set associated with each attack (noting that some files might not have the setting action coded for all attacks, or even coded at all):
 
 ```{r eval = FALSE}
 px <- px %>% mutate(set_player_id = case_when(skill == "Attack" & lag(skill) == "Set" & team == lag(team) ~ lag(player_id))
