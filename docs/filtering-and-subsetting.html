@@ -195,6 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Some different examples of extracting particular parts of the play-by-play data.</p>
 <div id="attack-after-perfect-or-good-reception" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Attack after perfect or good reception</h2>
+<p><strong>Aim:</strong> find attacks after perfect or good reception</p>
 <p>In the <a href="data-augmentation.html#reception-quality">Reception quality</a> section, we added a <code>reception_quality</code> column to our data frame. We can use this now to identify reception-phase attacks, in rallies where reception was good or perfect:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="filtering-and-subsetting.html#cb19-1"></a>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Attack&quot;</span> <span class="op">&amp;</span><span class="st"> </span>phase <span class="op">==</span><span class="st"> &quot;Reception&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;Perfect|Positive&quot;</span>, reception_quality)) <span class="op">%&gt;%</span></span>
 <span id="cb19-2"><a href="filtering-and-subsetting.html#cb19-2"></a><span class="st">  </span><span class="kw">group_by</span>(team) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">summarize</span>(<span class="dt">kill_rate =</span> <span class="kw">mean</span>(evaluation <span class="op">==</span><span class="st"> &quot;Winning attack&quot;</span>))</span>
@@ -206,7 +207,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="players-on-court" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Players on court</h2>
-<p>To extract a subset of our plays dataframe where particular players were on court.</p>
+<p><strong>Aim:</strong> to extract the subset of our plays dataframe that correspond to points where particular players were on court.</p>
 <p>First some helper functions:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="filtering-and-subsetting.html#cb20-1"></a><span class="co">## find rows where a single player is on court</span></span>
 <span id="cb20-2"><a href="filtering-and-subsetting.html#cb20-2"></a>player_on_court &lt;-<span class="st"> </span><span class="cf">function</span>(x, target_player_id, <span class="dt">team =</span> <span class="ot">NULL</span>) {</span>
@@ -250,6 +251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="first-transition-attack" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> First transition attack</h2>
+<p><strong>Aim:</strong> find rows corresponding to the first transition attack opportunity in each rally (i.e. after the receiving team has attacked, find the first attack by the serving team).</p>
 <p>As noted in the <a href="general-notes-and-tips.html#identifiers">Identifiers</a> setion, each team’s dig-set-attack (or whatever touches they make on their side of the net) has a unique <code>team_touch_id</code> value. First we find the <code>team_touch_id</code> values for reception-phase play, and then add one to each to get the <em>next</em> team touch (i.e. the first transition play, by the other team — but note that this next touch also has to be part of the same point, so we keep track of <code>point_id</code> too):</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="filtering-and-subsetting.html#cb22-1"></a>ttid &lt;-<span class="st"> </span>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Reception&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(match_id, point_id, team_touch_id) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb22-2"><a href="filtering-and-subsetting.html#cb22-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">team_touch_id =</span> team_touch_id<span class="op">+</span><span class="dv">1</span>, <span class="dt">is_fta =</span> <span class="ot">TRUE</span>)</span>

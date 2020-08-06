@@ -1,10 +1,10 @@
 # Data augmentation
 
-Adding extra columns to our play-by-play data to make other data-wrangling tasks easier.
+Some examples of adding extra columns to our play-by-play data in order to support particular analyses, or to make other data-wrangling tasks easier.
 
 ## The setter of a given attack
 
-Identify the player who made the set associated with each attack (noting that some files might not have the setting action coded for all attacks, or even coded at all):
+**Aim:** Identify the player who made the set associated with each attack (noting that some files might not have the setting action coded for all attacks, or even coded at all).
 
 ```{r eval = FALSE}
 px <- px %>% mutate(set_player_id = case_when(skill == "Attack" & lag(skill) == "Set" & team == lag(team) ~ lag(player_id))
@@ -15,7 +15,9 @@ px <- px %>% mutate(set_player_id = case_when(skill == "Attack" & lag(skill) == 
 
 ## Setter player IDs
 
-Say that we want to identify the `player_id` of the setter on court for each data row. The play-by-play data frame has `home_player_id1`, `home_player_id2`, ..., `home_player_id6`, which give the `player_id` of the home team player currently in position 1, 2, ..., and 6. It also has a `home_setter_position` column, which tells us which position the home team setter is in (1--6). So to create a `home_setter_id` column we simply need to extract the value in the `home_player_idX` column for each row of the data frame, where `X` is the value in the `home_setter_position` at each row.
+**Aim:** identify the `player_id` of the setter on court for each data row.
+
+The play-by-play data frame has `home_player_id1`, `home_player_id2`, ..., `home_player_id6`, which give the `player_id` of the home team player currently in position 1, 2, ..., and 6. It also has a `home_setter_position` column, which tells us which position the home team setter is in (1--6). So to create a `home_setter_id` column we simply need to extract the value in the `home_player_idX` column for each row of the data frame, where `X` is the value in the `home_setter_position` at each row.
 
 One way to do this is:
 
@@ -36,7 +38,9 @@ px <- px %>% rowwise() %>% mutate(home_setter_id = cur_data()[[paste0("home_play
 
 ## Reception quality
 
-We want to add a column that tells us the reception quality associated with each rally. The reception quality for a given rally is found in the `evaluation` column of the row that has the `skill` value of "Reception". We just need to propagate this value to all other rows associated with that particular rally.
+**Aim:** add a column that tells us the reception quality associated with each rally.
+
+The reception quality for a given rally is found in the `evaluation` column of the row that has the `skill` value of "Reception". We just need to propagate this value to all other rows associated with that particular rally.
 
 First we extract the reception quality for each rally (remember from the [Identifiers] section that the `point_id` value identifies the rally, but needs to be combined with `match_id` to be globally unique):
 

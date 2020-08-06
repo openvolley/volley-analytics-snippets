@@ -4,6 +4,8 @@ Some different examples of extracting particular parts of the play-by-play data.
 
 ## Attack after perfect or good reception
 
+**Aim:** find attacks after perfect or good reception
+
 In the [Reception quality] section, we added a `reception_quality` column to our data frame. We can use this now to identify reception-phase attacks, in rallies where reception was good or perfect:
 
 ```{r}
@@ -13,7 +15,7 @@ px %>% dplyr::filter(skill == "Attack" & phase == "Reception" & grepl("Perfect|P
 
 ## Players on court
 
-To extract a subset of our plays dataframe where particular players were on court.
+**Aim:** to extract the subset of our plays dataframe that correspond to points where particular players were on court.
 
 First some helper functions:
 
@@ -64,6 +66,8 @@ nrow(px2) ## the number of rows in the filtered dataframe
 
 
 ## First transition attack
+
+**Aim:** find rows corresponding to the first transition attack opportunity in each rally (i.e. after the receiving team has attacked, find the first attack by the serving team).
 
 As noted in the [Identifiers] setion, each team's dig-set-attack (or whatever touches they make on their side of the net) has a unique `team_touch_id` value. First we find the `team_touch_id` values for reception-phase play, and then add one to each to get the *next* team touch (i.e. the first transition play, by the other team --- but note that this next touch also has to be part of the same point, so we keep track of `point_id` too):
 

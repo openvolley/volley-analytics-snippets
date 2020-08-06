@@ -91,6 +91,7 @@ For example, take these attack ending coordinates:
 ```{r hm0, echo = FALSE}
 ## fake data
 Na <- 20
+set.seed(17)
 px2 <- tibble(skill = "Attack", end_coordinate_x = c(runif(Na, min = 0.4, max = 1.2), runif(Na, min = 2, max = 3)),
             end_coordinate_y = c(runif(Na, min = 4.5, max = 6.6), runif(Na, min = 4.9, max = 6.6)))
 
@@ -122,6 +123,7 @@ Coordinates might not appear in the dvw file in any particular orientation (i.e.
 ```{r coordflipdata, echo = FALSE}
 ## some fake data for example purposes
 Na <- 100
+set.seed(42)
 px2 <- tibble(skill = "Attack", start_coordinate_x = 0.75 + rnorm(Na)*0.1, start_coordinate_y = pmax(3.25-rlnorm(Na)*0.05, 2.5), end_coordinate_x = runif(Na, min = 0.4, max = 3.6), end_coordinate_y = runif(Na, min = 4.5, max = 6.6), mid_coordinate_x = 0, mid_coordinate_y = 0)
 toflip <- sample.int(Na, size = Na/2)
 px2$start_coordinate_x[toflip] <- dv_flip_x(px2$start_coordinate_x[toflip])
