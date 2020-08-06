@@ -60,6 +60,10 @@ ggplot(attack_rate, aes(x, y, fill = rate)) + geom_tile() + ggcourt(labels = tea
 
 ## Plotting by line segment
 
+```{r cp2a, echo = FALSE}
+set.seed(31)
+```
+
 ```{r cp2}
 ## take just the serves from the play-by-play data
 xserves <- subset(px, skill == "Serve")
