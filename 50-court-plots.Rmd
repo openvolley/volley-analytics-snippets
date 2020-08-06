@@ -91,13 +91,13 @@ For example, take these attack ending coordinates:
 ```{r hm0, echo = FALSE}
 ## fake data
 Na <- 20
-px <- tibble(skill = "Attack", end_coordinate_x = c(runif(Na, min = 0.4, max = 1.2), runif(Na, min = 2, max = 3)),
+px2 <- tibble(skill = "Attack", end_coordinate_x = c(runif(Na, min = 0.4, max = 1.2), runif(Na, min = 2, max = 3)),
             end_coordinate_y = c(runif(Na, min = 4.5, max = 6.6), runif(Na, min = 4.9, max = 6.6)))
 
 ```
 
 ```{r hm2, fig.height = 4}
-ggplot(px %>% dplyr::filter(skill == "Attack"), aes(end_coordinate_x, end_coordinate_y)) +
+ggplot(px2 %>% dplyr::filter(skill == "Attack"), aes(end_coordinate_x, end_coordinate_y)) +
   ggcourt(labels = NULL, court = "upper") +
   geom_point(colour = "dodgerblue")
 
@@ -106,7 +106,7 @@ ggplot(px %>% dplyr::filter(skill == "Attack"), aes(end_coordinate_x, end_coordi
 As a heatmap:
 
 ```{r hm3, fig.height = 4}
-ggplot(px %>% dplyr::filter(skill == "Attack"), aes(end_coordinate_x, end_coordinate_y)) +
+ggplot(px2 %>% dplyr::filter(skill == "Attack"), aes(end_coordinate_x, end_coordinate_y)) +
   stat_density_2d(geom = "raster", aes_string(fill = "..density.."), contour = FALSE, h = 0.85, n = c(60, 120)) +
   scale_fill_distiller(palette = "Spectral", guide = FALSE) +
   ggcourt(labels = NULL, court = "upper")
@@ -122,19 +122,19 @@ Coordinates might not appear in the dvw file in any particular orientation (i.e.
 ```{r coordflipdata, echo = FALSE}
 ## some fake data for example purposes
 Na <- 100
-px <- tibble(skill = "Attack", start_coordinate_x = 0.75 + rnorm(Na)*0.1, start_coordinate_y = pmax(3.25-rlnorm(Na)*0.05, 2.5), end_coordinate_x = runif(Na, min = 0.4, max = 3.6), end_coordinate_y = runif(Na, min = 4.5, max = 6.6), mid_coordinate_x = 0, mid_coordinate_y = 0)
+px2 <- tibble(skill = "Attack", start_coordinate_x = 0.75 + rnorm(Na)*0.1, start_coordinate_y = pmax(3.25-rlnorm(Na)*0.05, 2.5), end_coordinate_x = runif(Na, min = 0.4, max = 3.6), end_coordinate_y = runif(Na, min = 4.5, max = 6.6), mid_coordinate_x = 0, mid_coordinate_y = 0)
 toflip <- sample.int(Na, size = Na/2)
-px$start_coordinate_x[toflip] <- dv_flip_x(px$start_coordinate_x[toflip])
-px$start_coordinate_y[toflip] <- dv_flip_y(px$start_coordinate_y[toflip])
-px$mid_coordinate_x[toflip] <- dv_flip_x(px$mid_coordinate_x[toflip])
-px$mid_coordinate_y[toflip] <- dv_flip_y(px$mid_coordinate_y[toflip])
-px$end_coordinate_x[toflip] <- dv_flip_x(px$end_coordinate_x[toflip])
-px$end_coordinate_y[toflip] <- dv_flip_y(px$end_coordinate_y[toflip])
+px2$start_coordinate_x[toflip] <- dv_flip_x(px2$start_coordinate_x[toflip])
+px2$start_coordinate_y[toflip] <- dv_flip_y(px2$start_coordinate_y[toflip])
+px2$mid_coordinate_x[toflip] <- dv_flip_x(px2$mid_coordinate_x[toflip])
+px2$mid_coordinate_y[toflip] <- dv_flip_y(px2$mid_coordinate_y[toflip])
+px2$end_coordinate_x[toflip] <- dv_flip_x(px2$end_coordinate_x[toflip])
+px2$end_coordinate_y[toflip] <- dv_flip_y(px2$end_coordinate_y[toflip])
 
 ```
 
 ```{r coordflip1}
-xattack <- px %>% dplyr::filter(skill == "Attack")
+xattack <- px2 %>% dplyr::filter(skill == "Attack")
 ggplot(xattack, aes(start_coordinate_x, start_coordinate_y, xend = end_coordinate_x, yend = end_coordinate_y)) + ggcourt(labels = NULL) +
   geom_segment(colour = "dodgerblue")
 
@@ -179,11 +179,11 @@ The `mid` coordinates can be used by the scout to indicate e.g. an attack that d
 
 ```{r midcoord}
 ## example data
-px <- data.frame(start_coordinate_x = c(0.75, 0.8), start_coordinate_y = c(3.25, 3.25),
+px2 <- data.frame(start_coordinate_x = c(0.75, 0.8), start_coordinate_y = c(3.25, 3.25),
                 mid_coordinate_x = c(NA, 1.4), mid_coordinate_y = c(NA, 3.5),
                 end_coordinate_x = c(1.1, 2), end_coordinate_y = c(5.5, 1.5))
 
-ggplot(px, aes(start_coordinate_x, start_coordinate_y, xend = end_coordinate_x, yend = end_coordinate_y)) + ggcourt(labels = NULL) +
+ggplot(px2, aes(start_coordinate_x, start_coordinate_y, xend = end_coordinate_x, yend = end_coordinate_y)) + ggcourt(labels = NULL) +
   geom_segment(colour = "dodgerblue",
                arrow = arrow(length = unit(2, "mm"), type = "closed", angle = 20, ends = "last"))
 
@@ -192,14 +192,14 @@ ggplot(px, aes(start_coordinate_x, start_coordinate_y, xend = end_coordinate_x, 
 In these cases it is better to plot the mid point as well, but we need to cope with the fact that some mid-coordinates will be missing (`NA`):
 
 ```{r midcoord2}
-ggplot(px, aes(start_coordinate_x, start_coordinate_y, xend = end_coordinate_x, yend = end_coordinate_y)) + ggcourt(labels = NULL) +
+ggplot(px2, aes(start_coordinate_x, start_coordinate_y, xend = end_coordinate_x, yend = end_coordinate_y)) + ggcourt(labels = NULL) +
   ## lines with no midpoint
-  geom_segment(data = px[is.na(px$mid_coordinate_x), ], colour = "dodgerblue",
+  geom_segment(data = px2[is.na(px2$mid_coordinate_x), ], colour = "dodgerblue",
                arrow = arrow(length = unit(2, "mm"), type = "closed", angle = 20, ends = "last")) +
   ## start to mid for lines with midpoint, no ending arrow
-  geom_segment(data = px[!is.na(px$mid_coordinate_x), ], aes(xend = mid_coordinate_x, yend = mid_coordinate_y), colour = "dodgerblue") +
+  geom_segment(data = px2[!is.na(px2$mid_coordinate_x), ], aes(xend = mid_coordinate_x, yend = mid_coordinate_y), colour = "dodgerblue") +
   ## mid to end for lines with midpoint
-  geom_segment(data = px[!is.na(px$mid_coordinate_x), ], aes(x = mid_coordinate_x, y = mid_coordinate_y), colour = "dodgerblue",
+  geom_segment(data = px2[!is.na(px2$mid_coordinate_x), ], aes(x = mid_coordinate_x, y = mid_coordinate_y), colour = "dodgerblue",
                arrow = arrow(length = unit(2, "mm"), type = "closed", angle = 20, ends = "last"))
 
 ```

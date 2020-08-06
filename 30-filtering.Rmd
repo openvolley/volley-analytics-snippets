@@ -1,0 +1,78 @@
+# Filtering and subsetting
+
+Some different examples of extracting particular parts of the play-by-play data.
+
+## Attack after perfect or good reception
+
+In the [Reception quality] section, we added a `reception_quality` column to our data frame. We can use this now to identify reception-phase attacks, in rallies where reception was good or perfect:
+
+```{r}
+px %>% dplyr::filter(skill == "Attack" & phase == "Reception" & grepl("Perfect|Positive", reception_quality)) %>%
+  group_by(team) %>% dplyr::summarize(kill_rate = mean(evaluation == "Winning attack"))
+```
+
+## Players on court
+
+To extract a subset of our plays dataframe where particular players were on court.
+
+First some helper functions:
+
+```{r playersoncourt1}
+## find rows where a single player is on court
+player_on_court <- function(x, target_player_id, team = NULL) {
+  if (!is.null(team)) team <- match.arg(team, c("home", "visiting"))
+  ## 'team' is optional here, if NULL then we look at both home and visiting teams
+  idx <- rep(FALSE, nrow(x))
+  if (is.null(team) || team == "home") {
+    idx <- idx | x$home_player_id1 == target_player_id | x$home_player_id2 == target_player_id | x$home_player_id3 == target_player_id |
+                 x$home_player_id4 == target_player_id | x$home_player_id5 == target_player_id | x$home_player_id6 == target_player_id
+  }
+  if (is.null(team) || team == "visiting") {
+    idx <- idx | x$visiting_player_id1 == target_player_id | x$visiting_player_id2 == target_player_id | x$visiting_player_id3 == target_player_id |
+                 x$visiting_player_id4 == target_player_id | x$visiting_player_id5 == target_player_id | x$visiting_player_id6 == target_player_id
+  }
+  idx[is.na(idx)] <- FALSE
+  idx
+}
+
+## find rows where any of our target players are on court
+any_player_on_court <- function(x, target_player_ids, team = NULL) {
+  ## for each target player, find rows where they are on court
+  out <- lapply(target_player_ids, function(pid) player_on_court(x, target_player_id = pid, team = team))
+  ## and now find rows where ANY of those players were on court
+  apply(do.call(cbind, out), 1, any)
+}
+
+## find rows where all of our target players are on court
+all_players_on_court <- function(x, target_player_ids, team = NULL) {
+  ## for each target player, find rows where they are on court
+  out <- lapply(target_player_ids, function(pid) player_on_court(x, target_player_id = pid, team = team))
+  ## and now find rows where ALL of those players were on court
+  apply(do.call(cbind, out), 1, all)
+}
+```
+
+And then we can apply these functions, for example to find rows when both of the players with id `BR5` and `BR10` are on court:
+
+```{r playersoncourt2}
+nrow(px) ## the number of rows in the full dataframe
+my_target_player_ids <- c("BR5", "BR10")
+px2 <- px[all_players_on_court(px, my_target_player_ids), ]
+nrow(px2) ## the number of rows in the filtered dataframe
+
+```
+
+
+## First transition attack
+
+As noted in the [Identifiers] setion, each team's dig-set-attack (or whatever touches they make on their side of the net) has a unique `team_touch_id` value. First we find the `team_touch_id` values for reception-phase play, and then add one to each to get the *next* team touch (i.e. the first transition play, by the other team --- but note that this next touch also has to be part of the same point, so we keep track of `point_id` too):
+
+```{r eval = FALSE}
+ttid <- px %>% dplyr::filter(skill == "Reception") %>% distinct(match_id, point_id, team_touch_id) %>% 
+    mutate(team_touch_id = team_touch_id+1, is_fta = TRUE)
+## join this to px
+px <- px %>% left_join(ttid, by = c("match_id", "point_id", "team_touch_id")) %>%
+    mutate(is_fta = case_when(is.na(is_fta) ~ FALSE, TRUE ~ is_fta)) ## clean up the NAs
+```
+
+The `px$is_fta` column should be `TRUE` for all actions that are in first-transition play, and you can extract what you need from that (filter just the attacks, or whatever you need).

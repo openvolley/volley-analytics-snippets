@@ -1,0 +1,9 @@
+# Odds and ends
+
+To be moved elsewhere in the document ...
+
+#### Counting the number of sets played by a team {-}
+
+```{r eval = FALSE}
+px %>% dplyr::filter(!is.na(team)) %>% distinct(team, match_id, set_number) %>% count(team)
+```

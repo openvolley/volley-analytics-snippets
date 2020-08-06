@@ -22,3 +22,13 @@ remotes::install_github("openvolley/peranavolley")
 
 ```
 
+## Example data
+
+Load some data that we'll use in this document for illustrative purposes:
+
+```{r exampledata}
+x <- dv_read(dv_example_file(1))
+px <- plays(x)
+
+summary(x)
+```
