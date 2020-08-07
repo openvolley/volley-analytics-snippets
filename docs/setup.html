@@ -132,7 +132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#openvolley"><i class="fa fa-check"></i>openvolley</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i>Contributing</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contribution-guidelines"><i class="fa fa-check"></i>Contribution guidelines</a></li>
+</ul></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#contributors-and-acknowledgements"><i class="fa fa-check"></i><b>1.1</b> Contributors and acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> Setup</a>
 <ul>
@@ -193,27 +197,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="setup" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Setup</h1>
 <p>Some packages (including those from openvolley project) are hosted on GitHub. You will need the <code>remotes</code> package to install these, so first install that if needed:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="setup.html#cb1-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">&quot;remotes&quot;</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)) <span class="kw">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup.html#cb2-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">&quot;remotes&quot;</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)) <span class="kw">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span></code></pre></div>
 <p>Volleyball-specific packages:</p>
 <p>For users working with DataVolley files:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup.html#cb2-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;openvolley/datavolley&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup.html#cb3-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;openvolley/datavolley&quot;</span>)</span></code></pre></div>
 <p>VBStats users will additionally need the <code>peranavolley</code> package:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup.html#cb3-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;openvolley/peranavolley&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup.html#cb4-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;openvolley/peranavolley&quot;</span>)</span></code></pre></div>
 <div id="example-data" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Example data</h2>
 <p>Load some data that we’ll use in this document for illustrative purposes:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup.html#cb4-1"></a>x &lt;-<span class="st"> </span><span class="kw">dv_read</span>(<span class="kw">dv_example_file</span>(<span class="dv">1</span>))</span>
-<span id="cb4-2"><a href="setup.html#cb4-2"></a>px &lt;-<span class="st"> </span><span class="kw">plays</span>(x)</span>
-<span id="cb4-3"><a href="setup.html#cb4-3"></a></span>
-<span id="cb4-4"><a href="setup.html#cb4-4"></a><span class="kw">summary</span>(x)</span>
-<span id="cb4-5"><a href="setup.html#cb4-5"></a><span class="co">#&gt; Match summary:</span></span>
-<span id="cb4-6"><a href="setup.html#cb4-6"></a><span class="co">#&gt; Date: 2015-01-25</span></span>
-<span id="cb4-7"><a href="setup.html#cb4-7"></a><span class="co">#&gt; League: Finale mladinke</span></span>
-<span id="cb4-8"><a href="setup.html#cb4-8"></a><span class="co">#&gt; Teams: Braslovče (JERONČIČ ZORAN/MIHALINEC DAMIJANA)</span></span>
-<span id="cb4-9"><a href="setup.html#cb4-9"></a><span class="co">#&gt;        vs</span></span>
-<span id="cb4-10"><a href="setup.html#cb4-10"></a><span class="co">#&gt;        Nova KBM Branik (HAFNER MATJAŽ)</span></span>
-<span id="cb4-11"><a href="setup.html#cb4-11"></a><span class="co">#&gt; Result: 3-0 (25-16, 25-14, 25-22)</span></span>
-<span id="cb4-12"><a href="setup.html#cb4-12"></a><span class="co">#&gt; Duration: 67 minutes</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="setup.html#cb5-1"></a>x &lt;-<span class="st"> </span><span class="kw">dv_read</span>(<span class="kw">dv_example_file</span>(<span class="dv">1</span>))</span>
+<span id="cb5-2"><a href="setup.html#cb5-2"></a>px &lt;-<span class="st"> </span><span class="kw">plays</span>(x)</span>
+<span id="cb5-3"><a href="setup.html#cb5-3"></a></span>
+<span id="cb5-4"><a href="setup.html#cb5-4"></a><span class="kw">summary</span>(x)</span>
+<span id="cb5-5"><a href="setup.html#cb5-5"></a><span class="co">#&gt; Match summary:</span></span>
+<span id="cb5-6"><a href="setup.html#cb5-6"></a><span class="co">#&gt; Date: 2015-01-25</span></span>
+<span id="cb5-7"><a href="setup.html#cb5-7"></a><span class="co">#&gt; League: Finale mladinke</span></span>
+<span id="cb5-8"><a href="setup.html#cb5-8"></a><span class="co">#&gt; Teams: Braslovče (JERONČIČ ZORAN/MIHALINEC DAMIJANA)</span></span>
+<span id="cb5-9"><a href="setup.html#cb5-9"></a><span class="co">#&gt;        vs</span></span>
+<span id="cb5-10"><a href="setup.html#cb5-10"></a><span class="co">#&gt;        Nova KBM Branik (HAFNER MATJAŽ)</span></span>
+<span id="cb5-11"><a href="setup.html#cb5-11"></a><span class="co">#&gt; Result: 3-0 (25-16, 25-14, 25-22)</span></span>
+<span id="cb5-12"><a href="setup.html#cb5-12"></a><span class="co">#&gt; Duration: 67 minutes</span></span></code></pre></div>
 
 </div>
 </div>

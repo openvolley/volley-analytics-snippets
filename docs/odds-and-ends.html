@@ -132,7 +132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#openvolley"><i class="fa fa-check"></i>openvolley</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i>Contributing</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contribution-guidelines"><i class="fa fa-check"></i>Contribution guidelines</a></li>
+</ul></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#contributors-and-acknowledgements"><i class="fa fa-check"></i><b>1.1</b> Contributors and acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> Setup</a>
 <ul>
@@ -195,7 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>To be moved elsewhere in the document …</p>
 <div id="counting-the-number-of-sets-played-by-a-team" class="section level4 unnumbered" number="">
 <h4>Counting the number of sets played by a team</h4>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="odds-and-ends.html#cb35-1"></a>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(team)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(team, match_id, set_number) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(team)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="odds-and-ends.html#cb36-1"></a>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(team)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(team, match_id, set_number) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(team)</span></code></pre></div>
 
 </div>
 </div>

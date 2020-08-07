@@ -32,7 +32,30 @@ The openvolley project aims to provide an open-source, freely available software
 
 See http://openvolley.org.
 
-## Acknowledgements {-}
+## Contributing {-}
+
+Have some code or corrections that you'd like to contribute to this project? Or a request for something you'd like to see covered? Please join in! Either:
+
+- [fork](https://help.github.com/articles/fork-a-repo/) the [GitHub repository](https://github.com/openvolley/volley-analytics-snippets), create a new branch with your changes, and submit a pull request; or
+- open [an issue](https://github.com/openvolley/volley-analytics-snippets/issues) (especially for requests); or
+- contact the maintainers directly.
+
+Maintainers and contributors must follow this project's [code of conduct](https://github.com/openvolley/volley-analytics-snippets/blob/master/CODE_OF_CONDUCT.md).
+
+### Contribution guidelines {-}
+
+- if you are forking the repo and submitting a pull request, please create a new branch and make your changes there
+- please follow the existing code styling and conventions
+- existing examples typically use tidyverse functions (e.g. using `x %>% dplyr::filter(blah)` rather than direct dataframe-indexing like `x[blah, ]`) --- but base R code is perfectly fine too, particularly if it's easier to understand
+- if your code example should actually run and show an output, use `x` and/or `px` as your data inputs if possible. These are from the example file bundled with the datavolley package:
+  ```{r egdata, eval = FALSE}
+  x <- dv_read(dv_example_file())
+  px <- plays(x)
+  ```
+  Note that this example file does not have some information scouted (e.g. attack or serve coordinates).
+- be aware that the project maintainers might modify your code to better fit the existing code style and document structure.
+
+## Contributors and acknowledgements
 
 
 

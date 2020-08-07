@@ -132,7 +132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#openvolley"><i class="fa fa-check"></i>openvolley</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i>Contributing</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contribution-guidelines"><i class="fa fa-check"></i>Contribution guidelines</a></li>
+</ul></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#contributors-and-acknowledgements"><i class="fa fa-check"></i><b>1.1</b> Contributors and acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> Setup</a>
 <ul>
@@ -194,9 +198,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">3</span> Reading files</h1>
 <div id="datavolley" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> DataVolley</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="reading-files.html#cb5-1"></a><span class="kw">library</span>(datavolley)</span>
-<span id="cb5-2"><a href="reading-files.html#cb5-2"></a>filename &lt;-<span class="st"> &quot;c:/my/filename.dvw&quot;</span></span>
-<span id="cb5-3"><a href="reading-files.html#cb5-3"></a>x &lt;-<span class="st"> </span><span class="kw">dv_read</span>(filename)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="reading-files.html#cb6-1"></a><span class="kw">library</span>(datavolley)</span>
+<span id="cb6-2"><a href="reading-files.html#cb6-2"></a>filename &lt;-<span class="st"> &quot;c:/my/filename.dvw&quot;</span></span>
+<span id="cb6-3"><a href="reading-files.html#cb6-3"></a>x &lt;-<span class="st"> </span><span class="kw">dv_read</span>(filename)</span></code></pre></div>
 <p>The <code>dv_read</code> function has a number of optional parameters. The most important are probably:</p>
 <ul>
 <li><p><code>insert_technical_timeouts</code>. By default, technical timeouts will be inserted at points 8 and 16 of sets 1–4 (for indoor files) or when the team scores sum to 21 in sets 1–2 (beach). You can avoid inserting technical timeouts by setting this to <code>FALSE</code>, or change the scores at which TTs are inserted (see <code>dv_read</code> function help)</p></li>
@@ -207,28 +211,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="vbstats" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> VBStats</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="reading-files.html#cb6-1"></a><span class="kw">library</span>(peranavolley)</span>
-<span id="cb6-2"><a href="reading-files.html#cb6-2"></a>x &lt;-<span class="st"> </span><span class="kw">pv_read</span>(<span class="st">&quot;c:/my/filename.psvb&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="reading-files.html#cb7-1"></a><span class="kw">library</span>(peranavolley)</span>
+<span id="cb7-2"><a href="reading-files.html#cb7-2"></a>x &lt;-<span class="st"> </span><span class="kw">pv_read</span>(<span class="st">&quot;c:/my/filename.psvb&quot;</span>)</span></code></pre></div>
 </div>
 <div id="reading-multiple-files" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Reading multiple files</h2>
 <p>You might want to read multiple files in and analyze them all together. First find all of the DataVolley files in the target directory:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="reading-files.html#cb7-1"></a>d &lt;-<span class="st"> </span><span class="kw">dir</span>(<span class="st">&quot;c:/data&quot;</span>, <span class="dt">pattern =</span> <span class="st">&quot;dvw$&quot;</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb7-2"><a href="reading-files.html#cb7-2"></a><span class="co">## if your files are in nested directories, add &#39;recursive = TRUE&#39; to the arguments</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="reading-files.html#cb8-1"></a>d &lt;-<span class="st"> </span><span class="kw">dir</span>(<span class="st">&quot;c:/data&quot;</span>, <span class="dt">pattern =</span> <span class="st">&quot;dvw$&quot;</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb8-2"><a href="reading-files.html#cb8-2"></a><span class="co">## if your files are in nested directories, add &#39;recursive = TRUE&#39; to the arguments</span></span></code></pre></div>
 <p>Read all of those files in a loop, extract the play-by-play component from each, and then join of those all together:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="reading-files.html#cb8-1"></a>lx &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
-<span id="cb8-2"><a href="reading-files.html#cb8-2"></a><span class="co">## read each file</span></span>
-<span id="cb8-3"><a href="reading-files.html#cb8-3"></a><span class="cf">for</span> (fi <span class="cf">in</span> <span class="kw">seq_along</span>(d)) lx[[fi]] &lt;-<span class="st"> </span><span class="kw">dv_read</span>(d[fi], <span class="dt">insert_technical_timeouts =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb8-4"><a href="reading-files.html#cb8-4"></a><span class="co">## now extract the play-by-play component from each and bind them together</span></span>
-<span id="cb8-5"><a href="reading-files.html#cb8-5"></a>px &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
-<span id="cb8-6"><a href="reading-files.html#cb8-6"></a><span class="cf">for</span> (fi <span class="cf">in</span> <span class="kw">seq_along</span>(lx)) px[[fi]] &lt;-<span class="st"> </span><span class="kw">plays</span>(lx)</span>
-<span id="cb8-7"><a href="reading-files.html#cb8-7"></a>px &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, px)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="reading-files.html#cb9-1"></a>lx &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
+<span id="cb9-2"><a href="reading-files.html#cb9-2"></a><span class="co">## read each file</span></span>
+<span id="cb9-3"><a href="reading-files.html#cb9-3"></a><span class="cf">for</span> (fi <span class="cf">in</span> <span class="kw">seq_along</span>(d)) lx[[fi]] &lt;-<span class="st"> </span><span class="kw">dv_read</span>(d[fi], <span class="dt">insert_technical_timeouts =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb9-4"><a href="reading-files.html#cb9-4"></a><span class="co">## now extract the play-by-play component from each and bind them together</span></span>
+<span id="cb9-5"><a href="reading-files.html#cb9-5"></a>px &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
+<span id="cb9-6"><a href="reading-files.html#cb9-6"></a><span class="cf">for</span> (fi <span class="cf">in</span> <span class="kw">seq_along</span>(lx)) px[[fi]] &lt;-<span class="st"> </span><span class="kw">plays</span>(lx)</span>
+<span id="cb9-7"><a href="reading-files.html#cb9-7"></a>px &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, px)</span></code></pre></div>
 <p>Note, the idiomatic R way to do this would be to use <code>lapply</code> instead of <code>for</code> loops:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="reading-files.html#cb9-1"></a>lx &lt;-<span class="st"> </span><span class="kw">lapply</span>(d, dv_read, <span class="dt">insert_technical_timeouts =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb9-2"><a href="reading-files.html#cb9-2"></a>px &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, <span class="kw">lapply</span>(lx, plays))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="reading-files.html#cb10-1"></a>lx &lt;-<span class="st"> </span><span class="kw">lapply</span>(d, dv_read, <span class="dt">insert_technical_timeouts =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb10-2"><a href="reading-files.html#cb10-2"></a>px &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, <span class="kw">lapply</span>(lx, plays))</span></code></pre></div>
 <p>It achieves the same thing. Use whichever you prefer. Similarly, you could also use dplyr’s <code>bind_rows</code> function instead of <code>do.call(rbind, ...)</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="reading-files.html#cb10-1"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb10-2"><a href="reading-files.html#cb10-2"></a>px &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="kw">lapply</span>(lx, plays))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="reading-files.html#cb11-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb11-2"><a href="reading-files.html#cb11-2"></a>px &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="kw">lapply</span>(lx, plays))</span></code></pre></div>
 <p>After these operations, we have <code>lx</code>, which is a list containing the full contents of every match file (including the match and team metadata), and <code>px</code>, which is just the play-by-play component of each (but all joined together, which makes it easy to analyze multiple matches at once).</p>
 </div>
 </div>

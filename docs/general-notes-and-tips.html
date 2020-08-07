@@ -132,7 +132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#openvolley"><i class="fa fa-check"></i>openvolley</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i>Contributing</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contribution-guidelines"><i class="fa fa-check"></i>Contribution guidelines</a></li>
+</ul></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#contributors-and-acknowledgements"><i class="fa fa-check"></i><b>1.1</b> Contributors and acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> Setup</a>
 <ul>
@@ -196,9 +200,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4>It may be better to use the <code>evaluation</code> column instead of the <code>evaluation_code</code> column for filtering and other data operations</h4>
 <p>Different scouting conventions mean that the entries in the <code>evaluation_code</code> column don’t always mean the same thing. For example, a block scouted as <code>B/</code> is an invasion (net touch or other violation) according to the default DataVolley conventions, but some scouts instead use <code>B/</code> to indicate a block tool, and others use it to indicate a poor block back to the opposition team. When a file is read into R with <code>dv_read</code>, the evaluation codes are converted into strings (stored in the <code>evaluation</code> column) following the conventions specified by the <code>skill_evaluation_decode</code> argument. Using the <code>evaluation</code> column is therefore likely to be more robust than the <code>evaluation_code</code> column, especially if your code is to be used on files collected by different scouts.</p>
 <p>For example, find block invasions by</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="general-notes-and-tips.html#cb12-1"></a>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Block&quot;</span> <span class="op">&amp;</span><span class="st"> </span>evaluation <span class="op">==</span><span class="st"> &quot;Invasion&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="general-notes-and-tips.html#cb13-1"></a>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Block&quot;</span> <span class="op">&amp;</span><span class="st"> </span>evaluation <span class="op">==</span><span class="st"> &quot;Invasion&quot;</span>)</span></code></pre></div>
 <p>rather than by</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="general-notes-and-tips.html#cb13-1"></a>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Block&quot;</span> <span class="op">&amp;</span><span class="st"> </span>evaluation_code <span class="op">==</span><span class="st"> &quot;/&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="general-notes-and-tips.html#cb14-1"></a>px <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skill <span class="op">==</span><span class="st"> &quot;Block&quot;</span> <span class="op">&amp;</span><span class="st"> </span>evaluation_code <span class="op">==</span><span class="st"> &quot;/&quot;</span>)</span></code></pre></div>
 </div>
 <div id="identifiers" class="section level4 unnumbered" number="">
 <h4>Identifiers</h4>

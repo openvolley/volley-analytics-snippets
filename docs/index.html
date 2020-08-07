@@ -132,7 +132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#openvolley"><i class="fa fa-check"></i>openvolley</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i>Contributing</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contribution-guidelines"><i class="fa fa-check"></i>Contribution guidelines</a></li>
+</ul></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#contributors-and-acknowledgements"><i class="fa fa-check"></i><b>1.1</b> Contributors and acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> Setup</a>
 <ul>
@@ -202,8 +206,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The openvolley project aims to provide an open-source, freely available software ecosystem to support volleyball analytics. It consists of a family of add-on packages that can be used with the R software package. R provides an enormous range of data manipulation, analysis, modelling, and graphical display functionality, including the ability to build interactive data analysis and visualisation apps.</p>
 <p>See <a href="http://openvolley.org" class="uri">http://openvolley.org</a>.</p>
 </div>
-<div id="acknowledgements" class="section level2 unnumbered" number="">
-<h2>Acknowledgements</h2>
+<div id="contributing" class="section level2 unnumbered" number="">
+<h2>Contributing</h2>
+<p>Have some code or corrections that you’d like to contribute to this project? Or a request for something you’d like to see covered? Please join in! Either:</p>
+<ul>
+<li><a href="https://help.github.com/articles/fork-a-repo/">fork</a> the <a href="https://github.com/openvolley/volley-analytics-snippets">GitHub repository</a>, create a new branch with your changes, and submit a pull request; or</li>
+<li>open <a href="https://github.com/openvolley/volley-analytics-snippets/issues">an issue</a> (especially for requests); or</li>
+<li>contact the maintainers directly.</li>
+</ul>
+<p>Maintainers and contributors must follow this project’s <a href="https://github.com/openvolley/volley-analytics-snippets/blob/master/CODE_OF_CONDUCT.md">code of conduct</a>.</p>
+<div id="contribution-guidelines" class="section level3 unnumbered" number="">
+<h3>Contribution guidelines</h3>
+<ul>
+<li><p>if you are forking the repo and submitting a pull request, please create a new branch and make your changes there</p></li>
+<li><p>please follow the existing code styling and conventions</p></li>
+<li><p>existing examples typically use tidyverse functions (e.g. using <code>x %&gt;% dplyr::filter(blah)</code> rather than direct dataframe-indexing like <code>x[blah, ]</code>) — but base R code is perfectly fine too, particularly if it’s easier to understand</p></li>
+<li><p>if your code example should actually run and show an output, use <code>x</code> and/or <code>px</code> as your data inputs if possible. These are from the example file bundled with the datavolley package:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a>x &lt;-<span class="st"> </span><span class="kw">dv_read</span>(<span class="kw">dv_example_file</span>())</span>
+<span id="cb1-2"><a href="index.html#cb1-2"></a>px &lt;-<span class="st"> </span><span class="kw">plays</span>(x)</span></code></pre></div>
+<p>Note that this example file does not have some information scouted (e.g. attack or serve coordinates).</p></li>
+<li><p>be aware that the project maintainers might modify your code to better fit the existing code style and document structure.</p></li>
+</ul>
+</div>
+</div>
+<div id="contributors-and-acknowledgements" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Contributors and acknowledgements</h2>
 
 </div>
 </div>
