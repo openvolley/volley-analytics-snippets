@@ -58,7 +58,55 @@ ggplot(attack_rate, aes(x, y, fill = rate)) + geom_tile() + ggcourt(labels = tea
 
 ```
 
+## Plotting by cone
+
+When scouting by cones, attacks are recorded as a direction (angle) rather than an ending point (zone or subzone). Let's first make an attack chart of cones using arrows to indicate the direction, and varying the width and colour of the line according to the number of attacks made in each direction:
+
+```{r cp_cones1}
+x <- dv_read(ovdata_example("190301_kats_beds"))
+px <- plays(x)
+
+## select left-side (X5) attacks
+attack_rate <- px %>% dplyr::filter(attack_code == "X5") %>%
+    group_by(start_zone, end_cone) %>% dplyr::summarize(n_attacks = n()) %>%
+    mutate(rate = n_attacks/sum(n_attacks)) %>% ungroup
+## add starting locations
+attack_rate <- bind_cols(attack_rate, dv_xy(attack_rate$start_zone, end = "lower"))
+## and end locations
+attack_rate <- bind_cols(attack_rate, dv_cone2xy(start_zones = attack_rate$start_zone,
+                                                 end_cones = attack_rate$end_cone, end = "upper"))
+
+ggplot(attack_rate, aes(x, y, xend = ex, yend = ey, colour = rate, size = rate)) +
+    ggcourt(labels = NULL) +
+    geom_segment(arrow = arrow(length = unit(2, "mm"), type = "closed", angle = 20)) +
+    scale_colour_distiller(palette = "OrRd", direction = 1, name = "Attack rate") +
+    guides(size = FALSE)
+
+```
+
+Or we can plot the cones using their polygons:
+
+```{r cp_cones2}
+
+cxy <- dv_cone2xy(start_zones = attack_rate$start_zone, end_cones = attack_rate$end_cone,
+                      as = "polygons")
+
+## this returns coordinates as list columns, unpack these to use with ggplot
+##  also add an identifier for each polygon
+cxy <- data.frame(cx = unlist(cxy$ex), cy = unlist(cxy$ey),
+                  id = unlist(lapply(seq_len(nrow(cxy)), rep, 4)))
+attack_rate <- attack_rate %>% mutate(id = row_number()) %>% left_join(cxy, by = "id")
+
+ggplot(attack_rate, aes(cx, cy, group = id, fill = rate)) +
+    ggcourt(labels = NULL) +
+    geom_polygon() +
+    scale_fill_distiller(palette = "OrRd", direction = 1, name = "Attack rate")
+
+```
+
 ## Plotting by line segment
+
+Line segments can be used with zones/subzones, cones (as in the example above), or coordinates.
 
 ```{r cp2a, echo = FALSE}
 set.seed(31)

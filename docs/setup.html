@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 Setup | Volleyball analytics snippets</title>
   <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 Setup | Volleyball analytics snippets" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="reading-files.html"/>
-<script src="libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -171,10 +173,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>8.1.3</b> VBStats</a></li>
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>8.2</b> Plotting by zone or subzone</a></li>
-<li class="chapter" data-level="8.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>8.3</b> Plotting by line segment</a></li>
-<li class="chapter" data-level="8.4" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>8.4</b> Heatmaps</a></li>
-<li class="chapter" data-level="8.5" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>8.5</b> Changing direction</a></li>
-<li class="chapter" data-level="8.6" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>8.6</b> Plotting mid-coordinates</a></li>
+<li class="chapter" data-level="8.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>8.3</b> Plotting by cone</a></li>
+<li class="chapter" data-level="8.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>8.4</b> Plotting by line segment</a></li>
+<li class="chapter" data-level="8.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>8.5</b> Heatmaps</a></li>
+<li class="chapter" data-level="8.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>8.6</b> Changing direction</a></li>
+<li class="chapter" data-level="8.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>8.7</b> Plotting mid-coordinates</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>9</b> Odds and ends</a></li>
 </ul>
@@ -197,27 +200,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="setup" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Setup</h1>
 <p>Some packages (including those from openvolley project) are hosted on GitHub. You will need the <code>remotes</code> package to install these, so first install that if needed:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup.html#cb2-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">&quot;remotes&quot;</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)) <span class="kw">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;remotes&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span></code></pre></div>
 <p>Volleyball-specific packages:</p>
 <p>For users working with DataVolley files:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup.html#cb3-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;openvolley/datavolley&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup.html#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;openvolley/datavolley&quot;</span>)</span></code></pre></div>
 <p>VBStats users will additionally need the <code>peranavolley</code> package:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup.html#cb4-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;openvolley/peranavolley&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup.html#cb4-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;openvolley/peranavolley&quot;</span>)</span></code></pre></div>
 <div id="example-data" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Example data</h2>
 <p>Load some data that we’ll use in this document for illustrative purposes:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="setup.html#cb5-1"></a>x &lt;-<span class="st"> </span><span class="kw">dv_read</span>(<span class="kw">dv_example_file</span>(<span class="dv">1</span>))</span>
-<span id="cb5-2"><a href="setup.html#cb5-2"></a>px &lt;-<span class="st"> </span><span class="kw">plays</span>(x)</span>
-<span id="cb5-3"><a href="setup.html#cb5-3"></a></span>
-<span id="cb5-4"><a href="setup.html#cb5-4"></a><span class="kw">summary</span>(x)</span>
-<span id="cb5-5"><a href="setup.html#cb5-5"></a><span class="co">#&gt; Match summary:</span></span>
-<span id="cb5-6"><a href="setup.html#cb5-6"></a><span class="co">#&gt; Date: 2015-01-25</span></span>
-<span id="cb5-7"><a href="setup.html#cb5-7"></a><span class="co">#&gt; League: Finale mladinke</span></span>
-<span id="cb5-8"><a href="setup.html#cb5-8"></a><span class="co">#&gt; Teams: Braslovče (JERONČIČ ZORAN/MIHALINEC DAMIJANA)</span></span>
-<span id="cb5-9"><a href="setup.html#cb5-9"></a><span class="co">#&gt;        vs</span></span>
-<span id="cb5-10"><a href="setup.html#cb5-10"></a><span class="co">#&gt;        Nova KBM Branik (HAFNER MATJAŽ)</span></span>
-<span id="cb5-11"><a href="setup.html#cb5-11"></a><span class="co">#&gt; Result: 3-0 (25-16, 25-14, 25-22)</span></span>
-<span id="cb5-12"><a href="setup.html#cb5-12"></a><span class="co">#&gt; Duration: 67 minutes</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="setup.html#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">dv_read</span>(<span class="fu">dv_example_file</span>(<span class="dv">1</span>))</span>
+<span id="cb5-2"><a href="setup.html#cb5-2" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> <span class="fu">plays</span>(x)</span>
+<span id="cb5-3"><a href="setup.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="setup.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span>
+<span id="cb5-5"><a href="setup.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Match summary:</span></span>
+<span id="cb5-6"><a href="setup.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Date: 2015-01-25</span></span>
+<span id="cb5-7"><a href="setup.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; League: Finale mladinke</span></span>
+<span id="cb5-8"><a href="setup.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Teams: Braslovče (JERONČIČ ZORAN/MIHALINEC DAMIJANA)</span></span>
+<span id="cb5-9"><a href="setup.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        vs</span></span>
+<span id="cb5-10"><a href="setup.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        Nova KBM Branik (HAFNER MATJAŽ)</span></span>
+<span id="cb5-11"><a href="setup.html#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Result: 3-0 (25-16, 25-14, 25-22)</span></span>
+<span id="cb5-12"><a href="setup.html#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Duration: 67 minutes</span></span></code></pre></div>
 
 </div>
 </div>
