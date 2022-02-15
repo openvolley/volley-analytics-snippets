@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 Data augmentation | Volleyball analytics snippets</title>
   <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 Data augmentation | Volleyball analytics snippets" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://openvolley.github.io/volley-analytics-snippets/" />
-  <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets/images/cover.png" />
+  <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
   <meta property="og:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
 
@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="6 Data augmentation | Volleyball analytics snippets" />
   
   <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets/images/cover.png" />
+  <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
 
 <meta name="author" content="Ben Raymond, Adrien Ickowicz" />
 
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="general-notes-and-tips.html"/>
 <link rel="next" href="filtering-and-subsetting.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,15 +50,15 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +118,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="journal.css" type="text/css" />
 </head>
@@ -203,7 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="the-setter-of-a-given-attack" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> The setter of a given attack</h2>
 <p><strong>Aim:</strong> Identify the player who made the set associated with each attack (noting that some files might not have the setting action coded for all attacks, or even coded at all).</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="data-augmentation.html#cb15-1" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">set_player_id =</span> <span class="fu">case_when</span>(skill <span class="sc">==</span> <span class="st">&quot;Attack&quot;</span> <span class="sc">&amp;</span> <span class="fu">lag</span>(skill) <span class="sc">==</span> <span class="st">&quot;Set&quot;</span> <span class="sc">&amp;</span> team <span class="sc">==</span> <span class="fu">lag</span>(team) <span class="sc">~</span> <span class="fu">lag</span>(player_id))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-augmentation.html#cb14-1" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">set_player_id =</span> <span class="fu">case_when</span>(skill <span class="sc">==</span> <span class="st">&quot;Attack&quot;</span> <span class="sc">&amp;</span> <span class="fu">lag</span>(skill) <span class="sc">==</span> <span class="st">&quot;Set&quot;</span> <span class="sc">&amp;</span> team <span class="sc">==</span> <span class="fu">lag</span>(team) <span class="sc">~</span> <span class="fu">lag</span>(player_id))</span></code></pre></div>
 <p>(The <code>set_player_id</code> column will be <code>NA</code> when there is no matching set coded before the attack.)</p>
 </div>
 <div id="setter-player-ids" class="section level2" number="6.2">
@@ -211,24 +213,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Aim:</strong> identify the <code>player_id</code> of the setter on court for each data row.</p>
 <p>The play-by-play data frame has <code>home_player_id1</code>, <code>home_player_id2</code>, …, <code>home_player_id6</code>, which give the <code>player_id</code> of the home team player currently in position 1, 2, …, and 6. It also has a <code>home_setter_position</code> column, which tells us which position the home team setter is in (1–6). So to create a <code>home_setter_id</code> column we simply need to extract the value in the <code>home_player_idX</code> column for each row of the data frame, where <code>X</code> is the value in the <code>home_setter_position</code> at each row.</p>
 <p>One way to do this is:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-augmentation.html#cb16-1" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">home_setter_id =</span> <span class="fu">case_when</span>(home_setter_position <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> home_player_id1,</span>
-<span id="cb16-2"><a href="data-augmentation.html#cb16-2" aria-hidden="true" tabindex="-1"></a>                                               home_setter_position <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> home_player_id2,</span>
-<span id="cb16-3"><a href="data-augmentation.html#cb16-3" aria-hidden="true" tabindex="-1"></a>                                               home_setter_position <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> home_player_id3,</span>
-<span id="cb16-4"><a href="data-augmentation.html#cb16-4" aria-hidden="true" tabindex="-1"></a>                                               home_setter_position <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> home_player_id4,</span>
-<span id="cb16-5"><a href="data-augmentation.html#cb16-5" aria-hidden="true" tabindex="-1"></a>                                               home_setter_position <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> home_player_id5,</span>
-<span id="cb16-6"><a href="data-augmentation.html#cb16-6" aria-hidden="true" tabindex="-1"></a>                                               home_setter_position <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> home_player_id6))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="data-augmentation.html#cb15-1" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">home_setter_id =</span> <span class="fu">case_when</span>(home_setter_position <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> home_player_id1,</span>
+<span id="cb15-2"><a href="data-augmentation.html#cb15-2" aria-hidden="true" tabindex="-1"></a>                                               home_setter_position <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> home_player_id2,</span>
+<span id="cb15-3"><a href="data-augmentation.html#cb15-3" aria-hidden="true" tabindex="-1"></a>                                               home_setter_position <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> home_player_id3,</span>
+<span id="cb15-4"><a href="data-augmentation.html#cb15-4" aria-hidden="true" tabindex="-1"></a>                                               home_setter_position <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> home_player_id4,</span>
+<span id="cb15-5"><a href="data-augmentation.html#cb15-5" aria-hidden="true" tabindex="-1"></a>                                               home_setter_position <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> home_player_id5,</span>
+<span id="cb15-6"><a href="data-augmentation.html#cb15-6" aria-hidden="true" tabindex="-1"></a>                                               home_setter_position <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> home_player_id6))</span></code></pre></div>
 <p>But that is rather cumbersome and inelegant. A more concise method is:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-augmentation.html#cb17-1" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">home_setter_id =</span> <span class="fu">cur_data</span>()[[<span class="fu">paste0</span>(<span class="st">&quot;home_player_id&quot;</span>, home_setter_position)]]) <span class="sc">%&gt;%</span> ungroup</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-augmentation.html#cb16-1" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">home_setter_id =</span> <span class="fu">cur_data</span>()[[<span class="fu">paste0</span>(<span class="st">&quot;home_player_id&quot;</span>, home_setter_position)]]) <span class="sc">%&gt;%</span> ungroup</span></code></pre></div>
 </div>
 <div id="reception-quality" class="section level2" number="6.3">
 <h2><span class="header-section-number">6.3</span> Reception quality</h2>
 <p><strong>Aim:</strong> add a column that tells us the reception quality associated with each rally.</p>
 <p>The reception quality for a given rally is found in the <code>evaluation</code> column of the row that has the <code>skill</code> value of “Reception”. We just need to propagate this value to all other rows associated with that particular rally.</p>
 <p>First we extract the reception quality for each rally (remember from the <a href="general-notes-and-tips.html#identifiers">Identifiers</a> section that the <code>point_id</code> value identifies the rally, but needs to be combined with <code>match_id</code> to be globally unique):</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="data-augmentation.html#cb18-1" aria-hidden="true" tabindex="-1"></a>rq <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(skill <span class="sc">==</span> <span class="st">&quot;Reception&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(match_id, point_id) <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="data-augmentation.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">reception_quality =</span> <span class="cf">if</span> (<span class="fu">n</span>() <span class="sc">==</span> <span class="dv">1</span>) .data<span class="sc">$</span>evaluation <span class="cf">else</span> <span class="cn">NA_character_</span>) <span class="sc">%&gt;%</span> ungroup</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-augmentation.html#cb17-1" aria-hidden="true" tabindex="-1"></a>rq <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(skill <span class="sc">==</span> <span class="st">&quot;Reception&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(match_id, point_id) <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="data-augmentation.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">reception_quality =</span> <span class="cf">if</span> (<span class="fu">n</span>() <span class="sc">==</span> <span class="dv">1</span>) .data<span class="sc">$</span>evaluation <span class="cf">else</span> <span class="cn">NA_character_</span>) <span class="sc">%&gt;%</span> ungroup</span></code></pre></div>
 <p>So <code>rq</code> is a data.frame with the reception quality for each <code>match_id</code> and <code>point_id</code> combination. <code>reception_quality</code> will be <code>NA</code> if there was no reception (or more than one reception — perhaps due to a scouting error?) involved in that point. Now join <code>rq</code> back to our full plays dataframe:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="data-augmentation.html#cb19-1" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(rq, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;match_id&quot;</span>, <span class="st">&quot;point_id&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="data-augmentation.html#cb18-1" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(rq, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;match_id&quot;</span>, <span class="st">&quot;point_id&quot;</span>))</span></code></pre></div>
 <p>So now we have <code>reception_quality</code> for all rows of the data frame.</p>
 
 </div>
@@ -243,7 +245,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -262,6 +263,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -282,6 +284,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

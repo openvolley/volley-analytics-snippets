@@ -1,24 +1,18 @@
 # Setup {#setup}
 
-Some packages (including those from openvolley project) are hosted on GitHub. You will need the `remotes` package to install these, so first install that if needed:
-
-```{r remotes}
-if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
-```
-
-Volleyball-specific packages:
-
-For users working with DataVolley files:
+Install some volleyball-specific packages from the openvolley project:
 
 ```{r vpkgs1, eval = FALSE}
-remotes::install_github("openvolley/datavolley")
+options(repos = c(openvolley = "https://openvolley.r-universe.dev",
+                  CRAN = "https://cloud.r-project.org"))
+install.packages(c("datavolley", "ovlytics"))
 
 ```
 
 VBStats users will additionally need the `peranavolley` package:
 
 ```{r vpkgs2, eval = FALSE}
-remotes::install_github("openvolley/peranavolley")
+install.packages("peranavolley")
 
 ```
 

@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 General notes and tips | Volleyball analytics snippets</title>
   <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 General notes and tips | Volleyball analytics snippets" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://openvolley.github.io/volley-analytics-snippets/" />
-  <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets/images/cover.png" />
+  <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
   <meta property="og:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
 
@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="5 General notes and tips | Volleyball analytics snippets" />
   
   <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets/images/cover.png" />
+  <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
 
 <meta name="author" content="Ben Raymond, Adrien Ickowicz" />
 
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="file-validation.html"/>
 <link rel="next" href="data-augmentation.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,15 +50,15 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +118,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="journal.css" type="text/css" />
 </head>
@@ -203,9 +205,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4>It may be better to use the <code>evaluation</code> column instead of the <code>evaluation_code</code> column for filtering and other data operations</h4>
 <p>Different scouting conventions mean that the entries in the <code>evaluation_code</code> column don’t always mean the same thing. For example, a block scouted as <code>B/</code> is an invasion (net touch or other violation) according to the default DataVolley conventions, but some scouts instead use <code>B/</code> to indicate a block tool, and others use it to indicate a poor block back to the opposition team. When a file is read into R with <code>dv_read</code>, the evaluation codes are converted into strings (stored in the <code>evaluation</code> column) following the conventions specified by the <code>skill_evaluation_decode</code> argument. Using the <code>evaluation</code> column is therefore likely to be more robust than the <code>evaluation_code</code> column, especially if your code is to be used on files collected by different scouts.</p>
 <p>For example, find block invasions by</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="general-notes-and-tips.html#cb13-1" aria-hidden="true" tabindex="-1"></a>px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(skill <span class="sc">==</span> <span class="st">&quot;Block&quot;</span> <span class="sc">&amp;</span> evaluation <span class="sc">==</span> <span class="st">&quot;Invasion&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="general-notes-and-tips.html#cb12-1" aria-hidden="true" tabindex="-1"></a>px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(skill <span class="sc">==</span> <span class="st">&quot;Block&quot;</span> <span class="sc">&amp;</span> evaluation <span class="sc">==</span> <span class="st">&quot;Invasion&quot;</span>)</span></code></pre></div>
 <p>rather than by</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="general-notes-and-tips.html#cb14-1" aria-hidden="true" tabindex="-1"></a>px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(skill <span class="sc">==</span> <span class="st">&quot;Block&quot;</span> <span class="sc">&amp;</span> evaluation_code <span class="sc">==</span> <span class="st">&quot;/&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="general-notes-and-tips.html#cb13-1" aria-hidden="true" tabindex="-1"></a>px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(skill <span class="sc">==</span> <span class="st">&quot;Block&quot;</span> <span class="sc">&amp;</span> evaluation_code <span class="sc">==</span> <span class="st">&quot;/&quot;</span>)</span></code></pre></div>
 </div>
 <div id="identifiers" class="section level4 unnumbered">
 <h4>Identifiers</h4>
@@ -230,7 +232,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -249,6 +250,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -269,6 +271,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

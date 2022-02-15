@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 Setup | Volleyball analytics snippets</title>
   <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 Setup | Volleyball analytics snippets" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://openvolley.github.io/volley-analytics-snippets/" />
-  <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets/images/cover.png" />
+  <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
   <meta property="og:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
 
@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="2 Setup | Volleyball analytics snippets" />
   
   <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets/images/cover.png" />
+  <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
 
 <meta name="author" content="Ben Raymond, Adrien Ickowicz" />
 
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="reading-files.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,15 +50,15 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +118,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="journal.css" type="text/css" />
 </head>
@@ -199,28 +201,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="setup" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Setup</h1>
-<p>Some packages (including those from openvolley project) are hosted on GitHub. You will need the <code>remotes</code> package to install these, so first install that if needed:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;remotes&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span></code></pre></div>
-<p>Volleyball-specific packages:</p>
-<p>For users working with DataVolley files:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup.html#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;openvolley/datavolley&quot;</span>)</span></code></pre></div>
+<p>Install some volleyball-specific packages from the openvolley project:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repos =</span> <span class="fu">c</span>(<span class="at">openvolley =</span> <span class="st">&quot;https://openvolley.r-universe.dev&quot;</span>,</span>
+<span id="cb2-2"><a href="setup.html#cb2-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">CRAN =</span> <span class="st">&quot;https://cloud.r-project.org&quot;</span>))</span>
+<span id="cb2-3"><a href="setup.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;datavolley&quot;</span>, <span class="st">&quot;ovlytics&quot;</span>))</span></code></pre></div>
 <p>VBStats users will additionally need the <code>peranavolley</code> package:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup.html#cb4-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;openvolley/peranavolley&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;peranavolley&quot;</span>)</span></code></pre></div>
 <div id="example-data" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Example data</h2>
 <p>Load some data that we’ll use in this document for illustrative purposes:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="setup.html#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">dv_read</span>(<span class="fu">dv_example_file</span>(<span class="dv">1</span>))</span>
-<span id="cb5-2"><a href="setup.html#cb5-2" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> <span class="fu">plays</span>(x)</span>
-<span id="cb5-3"><a href="setup.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="setup.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span>
-<span id="cb5-5"><a href="setup.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Match summary:</span></span>
-<span id="cb5-6"><a href="setup.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Date: 2015-01-25</span></span>
-<span id="cb5-7"><a href="setup.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; League: Finale mladinke</span></span>
-<span id="cb5-8"><a href="setup.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Teams: Braslovče (JERONČIČ ZORAN/MIHALINEC DAMIJANA)</span></span>
-<span id="cb5-9"><a href="setup.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        vs</span></span>
-<span id="cb5-10"><a href="setup.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        Nova KBM Branik (HAFNER MATJAŽ)</span></span>
-<span id="cb5-11"><a href="setup.html#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Result: 3-0 (25-16, 25-14, 25-22)</span></span>
-<span id="cb5-12"><a href="setup.html#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Duration: 67 minutes</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup.html#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">dv_read</span>(<span class="fu">dv_example_file</span>(<span class="dv">1</span>))</span>
+<span id="cb4-2"><a href="setup.html#cb4-2" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> <span class="fu">plays</span>(x)</span>
+<span id="cb4-3"><a href="setup.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="setup.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span>
+<span id="cb4-5"><a href="setup.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Match summary:</span></span>
+<span id="cb4-6"><a href="setup.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Date: 2015-01-25</span></span>
+<span id="cb4-7"><a href="setup.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; League: Finale mladinke</span></span>
+<span id="cb4-8"><a href="setup.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Teams: Braslovče (JERONČIČ ZORAN/MIHALINEC DAMIJANA)</span></span>
+<span id="cb4-9"><a href="setup.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        vs</span></span>
+<span id="cb4-10"><a href="setup.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        Nova KBM Branik (HAFNER MATJAŽ)</span></span>
+<span id="cb4-11"><a href="setup.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Result: 3-0 (25-16, 25-14, 25-22)</span></span>
+<span id="cb4-12"><a href="setup.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Duration: 67 minutes</span></span></code></pre></div>
 
 </div>
 </div>
@@ -234,7 +235,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -253,6 +253,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -273,6 +274,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

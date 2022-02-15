@@ -80,7 +80,7 @@ ggplot(attack_rate, aes(x, y, xend = ex, yend = ey, colour = rate, size = rate))
     ggcourt(labels = NULL) +
     geom_segment(arrow = arrow(length = unit(2, "mm"), type = "closed", angle = 20)) +
     scale_colour_distiller(palette = "OrRd", direction = 1, name = "Attack rate") +
-    guides(size = FALSE)
+    guides(size = "none")
 
 ```
 
@@ -156,17 +156,34 @@ ggplot(px2 %>% dplyr::filter(skill == "Attack"), aes(end_coordinate_x, end_coord
 
 ```
 
-As a heatmap:
+As a heatmap, using the `ovlytics::ov_heatmap_kde` function:
 
-```{r hm3, fig.height = 4}
+```{r hm3a, fig.height = 4}
+library(ovlytics)
+
+## first generate the heatmap kernel density estimate
+hx <- ov_heatmap_kde(px2 %>% dplyr::filter(skill == "Attack") %>% dplyr::select(end_coordinate_x, end_coordinate_y),
+                     resolution = "coordinates", court = "upper")
+
+## then plot it
+ggplot(hx, aes(x, y, fill = density)) +
+    scale_fill_distiller(palette = "Spectral", guide = "none") +
+    geom_raster() +
+    ggcourt(labels = NULL, court = "upper") ## plot the court last, so that the lines overlay the heatmap
+
+```
+
+The smoothness of the heatmap is automatically set depending on the `resolution` value ("subzones" or "coordinates"), but can be controlled by the `bw` parameter in `ov_heatmap_kde` if you wish to change it. You can alternatively use `stat_density_2d` to generate the density estimate:
+
+```{r hm3b, fig.height = 4}
 ggplot(px2 %>% dplyr::filter(skill == "Attack"), aes(end_coordinate_x, end_coordinate_y)) +
   stat_density_2d(geom = "raster", aes_string(fill = "..density.."), contour = FALSE, h = 0.85, n = c(60, 120)) +
-  scale_fill_distiller(palette = "Spectral", guide = FALSE) +
+  scale_fill_distiller(palette = "Spectral", guide = "none") +
   ggcourt(labels = NULL, court = "upper")
 
 ```
 
-The `h` parameter controls the smoothness of the heatmap (this is the bandwidth of the kernel density estimator). If you need more control over the heatmap, you may need to call e.g. `MASS::kde2d()` directly to construct the heatmap layer and plot it with `geom_tile`.
+If you need more control over the heatmap, you may need to call e.g. `MASS::kde2d()` directly to construct the density estimate and plot it with `geom_raster`.
 
 ## Changing direction
 
