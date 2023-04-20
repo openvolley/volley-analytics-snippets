@@ -1,0 +1,72 @@
+# Indicators and statistics
+
+## Expected sideout rate
+
+It is common to see passer performance reported as a single number bsaed on pass ratings, using a weighting scheme to combine them. For example, a perfect pass might be worth 3 points, an "OK" pass 2 points, a poor pass 1 point, and an error 0 points. Then a passer who passed one perfect pass, one poor pass, and one error would have a performance rating of `(3 + 1 + 0)/3 = 1.333`. However, the weightings used in this type of approach are often arbitrary (why should a perfect pass be 3 times as valuable as a poor pass?)
+
+Expected sideout rate uses pass ratings to evaluate passing performance, but with a more principled approach to assigning the value of the different pass outcomes. It weights each pass rating according to the league-average sideout rate associated with it. For example, if the league-average sideout rate on a perfect pass is 75%, and the league-average sideout rate on a poor pass is 50%, then a perfect pass should be worth `75/50 = 1.5` times as much as a poor pass.
+
+We can implement this by first calculating the league-average sideout rate on each pass rating, using a reference data set which is usually a whole-league data set or similar (note that in this example, purely for convenience, we are using data `px ` from a single match as its own reference. This is generally not a good idea, as noted below):
+
+```{r eso1}
+lso <- px %>% dplyr::filter(skill == "Reception") %>% group_by(.data$evaluation) %>%
+    dplyr::summarize(expected_sideout_rate = mean(.data$team == .data$point_won_by, na.rm = TRUE)) %>% ungroup
+```
+
+This tells us the relative value of each pass rating:
+
+```{r eso2}
+lso
+
+```
+
+(As a side note --- you can see that in this case an "OK" pass (e.g. a pass on the 3m line) has a value of `r round(lso$expected_sideout_rate[lso$evaluation == "OK, no first tempo possible"], 2)`, which is *lower* than the value of a negative pass (a poorer pass than an "OK" one --- value `r round(lso$expected_sideout_rate[lso$evaluation == "Negative, limited attack"], 2)`). This is because we are using only a single match as our reference data set, and it just so happens that in this particular match the sideout rate on negative passes was better than on OK passes. With a larger reference data set from many matches, these types of inconsistencies will be greatly reduced.)
+
+Then we can join our `lso` data back to our target `px` data set, creating an `expected_sideout_rate` value associated with each pass. The overall expected sideout rate for a given player or team is then just the average of the `expected_sideout_rate` values of all of their passes:
+
+```{r eso3}
+px %>% dplyr::filter(.data$skill == "Reception") %>% left_join(lso, by = "evaluation") %>%
+    group_by(.data$player_id, .data$player_name) %>%
+    dplyr::summarize(n_receptions = n(),
+                     expected_sideout_rate = mean(.data$expected_sideout_rate, na.rm = TRUE)) %>%
+    ungroup
+
+```
+
+## Expected breakpoint rate
+
+An analogous approach can be used to calculate expected breakpoint rate, as a measure of serving performance.
+
+```{r ebp1}
+lbp <- px %>% dplyr::filter(skill == "Serve") %>% group_by(.data$evaluation) %>%
+    dplyr::summarize(expected_breakpoint_rate = mean(.data$team == .data$point_won_by, na.rm = TRUE)) %>% ungroup
+```
+
+And
+
+```{r ebp3}
+px %>% dplyr::filter(.data$skill == "Serve") %>% left_join(lbp, by = "evaluation") %>%
+    group_by(.data$player_id, .data$player_name) %>%
+    dplyr::summarize(n_serves = n(),
+                     expected_breakpoint_rate = mean(.data$expected_breakpoint_rate, na.rm = TRUE)) %>%
+    ungroup
+
+```
+
+## Set assist rate
+
+The assist rate is the proportion of sets that yield an attack kill. The `lead` function from the dplyr package helps here, allowing us to augment the "set" data rows with the outcome of the associated attack (which will be in the data row following the set data row):
+
+```{r ast1}
+## first add a variable indicating whether a set was followed by a kill by the same team
+px %>% mutate(set_had_attack_kill = .data$skill == "Set" & lead(.data$skill) == "Attack" &
+                  lead(.data$evaluation) == "Winning attack" & lead(.data$team) == .data$team) %>%
+    ## then filter to just set rows
+    filter(.data$skill == "Set") %>%
+    ## and summarize as desired
+    group_by(.data$team, .data$phase) %>%
+    dplyr::summarize(assist_rate = sum(set_had_attack_kill, na.rm = TRUE) / n())
+
+```
+
+Note that this relies on all set and attack actions being scouted (i.e. there is a row in our `px` data frame for every set, as well as for every attack. Some scouts do not record all ball touches --- digs and sets are the most commonly-omitted skills.)

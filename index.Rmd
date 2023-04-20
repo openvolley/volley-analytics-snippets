@@ -1,6 +1,6 @@
 ---
 title: Volleyball analytics snippets
-author: Ben Raymond, Adrien Ickowicz
+author: "Ben Raymond, Adrien Ickowicz <img src='./logo.png' style='float:right; width:10%;' />"
 description: Notes and snippets of R code for volleyball analytics
 output:
   bookdown::gitbook:
