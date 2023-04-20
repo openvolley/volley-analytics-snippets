@@ -16,6 +16,10 @@ filtering-and-subsetting
 attack-after-perfect-or-good-reception
 players-on-court
 first-transition-attack
+indicators-and-statistics
+expected-sideout-rate
+expected-breakpoint-rate
+set-assist-rate
 court-plots
 background-on-location-information
 zones-and-subzones

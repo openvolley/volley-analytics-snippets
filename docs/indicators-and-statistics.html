@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Indicators and statistics | Volleyball analytics snippets</title>
+  <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Indicators and statistics | Volleyball analytics snippets" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
+  <meta property="og:description" content="Notes and snippets of R code for volleyball analytics" />
+  <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Indicators and statistics | Volleyball analytics snippets" />
+  
+  <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
+  <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
+
+<meta name="author" content="Ben Raymond, Adrien Ickowicz " />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="filtering-and-subsetting.html"/>
+<link rel="next" href="court-plots.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="journal.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#openvolley"><i class="fa fa-check"></i>openvolley</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i>Contributing</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contribution-guidelines"><i class="fa fa-check"></i>Contribution guidelines</a></li>
+</ul></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#contributors-and-acknowledgements"><i class="fa fa-check"></i><b>1.1</b> Contributors and acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> Setup</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="setup.html"><a href="setup.html#example-data"><i class="fa fa-check"></i><b>2.1</b> Example data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="reading-files.html"><a href="reading-files.html"><i class="fa fa-check"></i><b>3</b> Reading files</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="reading-files.html"><a href="reading-files.html#datavolley"><i class="fa fa-check"></i><b>3.1</b> DataVolley</a></li>
+<li class="chapter" data-level="3.2" data-path="reading-files.html"><a href="reading-files.html#vbstats"><i class="fa fa-check"></i><b>3.2</b> VBStats</a></li>
+<li class="chapter" data-level="3.3" data-path="reading-files.html"><a href="reading-files.html#reading-multiple-files"><i class="fa fa-check"></i><b>3.3</b> Reading multiple files</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="file-validation.html"><a href="file-validation.html"><i class="fa fa-check"></i><b>4</b> File validation</a></li>
+<li class="chapter" data-level="5" data-path="general-notes-and-tips.html"><a href="general-notes-and-tips.html"><i class="fa fa-check"></i><b>5</b> General notes and tips</a></li>
+<li class="chapter" data-level="6" data-path="data-augmentation.html"><a href="data-augmentation.html"><i class="fa fa-check"></i><b>6</b> Data augmentation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-augmentation.html"><a href="data-augmentation.html#the-setter-of-a-given-attack"><i class="fa fa-check"></i><b>6.1</b> The setter of a given attack</a></li>
+<li class="chapter" data-level="6.2" data-path="data-augmentation.html"><a href="data-augmentation.html#setter-player-ids"><i class="fa fa-check"></i><b>6.2</b> Setter player IDs</a></li>
+<li class="chapter" data-level="6.3" data-path="data-augmentation.html"><a href="data-augmentation.html#reception-quality"><i class="fa fa-check"></i><b>6.3</b> Reception quality</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html"><i class="fa fa-check"></i><b>7</b> Filtering and subsetting</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#attack-after-perfect-or-good-reception"><i class="fa fa-check"></i><b>7.1</b> Attack after perfect or good reception</a></li>
+<li class="chapter" data-level="7.2" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#players-on-court"><i class="fa fa-check"></i><b>7.2</b> Players on court</a></li>
+<li class="chapter" data-level="7.3" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#first-transition-attack"><i class="fa fa-check"></i><b>7.3</b> First transition attack</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html"><i class="fa fa-check"></i><b>8</b> Indicators and statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-sideout-rate"><i class="fa fa-check"></i><b>8.1</b> Expected sideout rate</a></li>
+<li class="chapter" data-level="8.2" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-breakpoint-rate"><i class="fa fa-check"></i><b>8.2</b> Expected breakpoint rate</a></li>
+<li class="chapter" data-level="8.3" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#set-assist-rate"><i class="fa fa-check"></i><b>8.3</b> Set assist rate</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>9</b> Court plots</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>9.1</b> Background on location information</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>9.1.1</b> Zones and subzones</a></li>
+<li class="chapter" data-level="9.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>9.1.2</b> Coordinates</a></li>
+<li class="chapter" data-level="9.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>9.1.3</b> VBStats</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>9.2</b> Plotting by zone or subzone</a></li>
+<li class="chapter" data-level="9.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>9.3</b> Plotting by cone</a></li>
+<li class="chapter" data-level="9.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>9.4</b> Plotting by line segment</a></li>
+<li class="chapter" data-level="9.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>9.5</b> Heatmaps</a></li>
+<li class="chapter" data-level="9.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>9.6</b> Changing direction</a></li>
+<li class="chapter" data-level="9.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>9.7</b> Plotting mid-coordinates</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>10</b> Odds and ends</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Volleyball analytics snippets</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="indicators-and-statistics" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">8</span> Indicators and statistics<a href="indicators-and-statistics.html#indicators-and-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="expected-sideout-rate" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Expected sideout rate<a href="indicators-and-statistics.html#expected-sideout-rate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>It is common to see passer performance reported as a single number bsaed on pass ratings, using a weighting scheme to combine them. For example, a perfect pass might be worth 3 points, an “OK” pass 2 points, a poor pass 1 point, and an error 0 points. Then a passer who passed one perfect pass, one poor pass, and one error would have a performance rating of <code>(3 + 1 + 0)/3 = 1.333</code>. However, the weightings used in this type of approach are often arbitrary (why should a perfect pass be 3 times as valuable as a poor pass?)</p>
+<p>Expected sideout rate uses pass ratings to evaluate passing performance, but with a more principled approach to assigning the value of the different pass outcomes. It weights each pass rating according to the league-average sideout rate associated with it. For example, if the league-average sideout rate on a perfect pass is 75%, and the league-average sideout rate on a poor pass is 50%, then a perfect pass should be worth <code>75/50 = 1.5</code> times as much as a poor pass.</p>
+<p>We can implement this by first calculating the league-average sideout rate on each pass rating, using a reference data set which is usually a whole-league data set or similar (note that in this example, purely for convenience, we are using data <code>px</code> from a single match as its own reference. This is generally not a good idea, as noted below):</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="indicators-and-statistics.html#cb23-1" aria-hidden="true" tabindex="-1"></a>lso <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(skill <span class="sc">==</span> <span class="st">&quot;Reception&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(.data<span class="sc">$</span>evaluation) <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="indicators-and-statistics.html#cb23-2" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">expected_sideout_rate =</span> <span class="fu">mean</span>(.data<span class="sc">$</span>team <span class="sc">==</span> .data<span class="sc">$</span>point_won_by, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> ungroup</span></code></pre></div>
+<p>This tells us the relative value of each pass rating:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="indicators-and-statistics.html#cb24-1" aria-hidden="true" tabindex="-1"></a>lso</span>
+<span id="cb24-2"><a href="indicators-and-statistics.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 2</span></span>
+<span id="cb24-3"><a href="indicators-and-statistics.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   evaluation                  expected_sideout_rate</span></span>
+<span id="cb24-4"><a href="indicators-and-statistics.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                                       &lt;dbl&gt;</span></span>
+<span id="cb24-5"><a href="indicators-and-statistics.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Error                                       0    </span></span>
+<span id="cb24-6"><a href="indicators-and-statistics.html#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Negative, limited attack                    0.512</span></span>
+<span id="cb24-7"><a href="indicators-and-statistics.html#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 OK, no first tempo possible                 0.444</span></span>
+<span id="cb24-8"><a href="indicators-and-statistics.html#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Perfect pass                                0.808</span></span>
+<span id="cb24-9"><a href="indicators-and-statistics.html#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Poor, no attack                             0    </span></span>
+<span id="cb24-10"><a href="indicators-and-statistics.html#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Positive, attack                            0.688</span></span></code></pre></div>
+<p>(As a side note — you can see that in this case an “OK” pass (e.g. a pass on the 3m line) has a value of 0.44, which is <em>lower</em> than the value of a negative pass (a poorer pass than an “OK” one — value 0.51). This is because we are using only a single match as our reference data set, and it just so happens that in this particular match the sideout rate on negative passes was better than on OK passes. With a larger reference data set from many matches, these types of inconsistencies will be greatly reduced.)</p>
+<p>Then we can join our <code>lso</code> data back to our target <code>px</code> data set, creating an <code>expected_sideout_rate</code> value associated with each pass. The overall expected sideout rate for a given player or team is then just the average of the <code>expected_sideout_rate</code> values of all of their passes:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="indicators-and-statistics.html#cb25-1" aria-hidden="true" tabindex="-1"></a>px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>skill <span class="sc">==</span> <span class="st">&quot;Reception&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(lso, <span class="at">by =</span> <span class="st">&quot;evaluation&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="indicators-and-statistics.html#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(.data<span class="sc">$</span>player_id, .data<span class="sc">$</span>player_name) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="indicators-and-statistics.html#cb25-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">n_receptions =</span> <span class="fu">n</span>(),</span>
+<span id="cb25-4"><a href="indicators-and-statistics.html#cb25-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expected_sideout_rate =</span> <span class="fu">mean</span>(.data<span class="sc">$</span>expected_sideout_rate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="indicators-and-statistics.html#cb25-5" aria-hidden="true" tabindex="-1"></a>    ungroup</span>
+<span id="cb25-6"><a href="indicators-and-statistics.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 4</span></span>
+<span id="cb25-7"><a href="indicators-and-statistics.html#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   player_id player_name       n_receptions expected_sideout_rate</span></span>
+<span id="cb25-8"><a href="indicators-and-statistics.html#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;                    &lt;int&gt;                 &lt;dbl&gt;</span></span>
+<span id="cb25-9"><a href="indicators-and-statistics.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 162       Jakub Peszko                 3                 0.647</span></span>
+<span id="cb25-10"><a href="indicators-and-statistics.html#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 164       Bartosz Mariański           27                 0.545</span></span>
+<span id="cb25-11"><a href="indicators-and-statistics.html#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 231       Adrian Buchowski            28                 0.536</span></span>
+<span id="cb25-12"><a href="indicators-and-statistics.html#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 30341     Tomas Rousseaux             21                 0.543</span></span>
+<span id="cb25-13"><a href="indicators-and-statistics.html#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 30511     Jake Langlois               29                 0.470</span></span>
+<span id="cb25-14"><a href="indicators-and-statistics.html#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 420       Lukas Tichacek               2                 0.512</span></span>
+<span id="cb25-15"><a href="indicators-and-statistics.html#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 456       Rafał Sobański              25                 0.549</span></span>
+<span id="cb25-16"><a href="indicators-and-statistics.html#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 561       Marcin Komenda               1                 0    </span></span>
+<span id="cb25-17"><a href="indicators-and-statistics.html#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9 656       Michał Potera               24                 0.649</span></span></code></pre></div>
+</div>
+<div id="expected-breakpoint-rate" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Expected breakpoint rate<a href="indicators-and-statistics.html#expected-breakpoint-rate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An analogous approach can be used to calculate expected breakpoint rate, as a measure of serving performance.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="indicators-and-statistics.html#cb26-1" aria-hidden="true" tabindex="-1"></a>lbp <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(skill <span class="sc">==</span> <span class="st">&quot;Serve&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(.data<span class="sc">$</span>evaluation) <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="indicators-and-statistics.html#cb26-2" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">expected_breakpoint_rate =</span> <span class="fu">mean</span>(.data<span class="sc">$</span>team <span class="sc">==</span> .data<span class="sc">$</span>point_won_by, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> ungroup</span></code></pre></div>
+<p>And</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="indicators-and-statistics.html#cb27-1" aria-hidden="true" tabindex="-1"></a>px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>skill <span class="sc">==</span> <span class="st">&quot;Serve&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(lbp, <span class="at">by =</span> <span class="st">&quot;evaluation&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="indicators-and-statistics.html#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(.data<span class="sc">$</span>player_id, .data<span class="sc">$</span>player_name) <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="indicators-and-statistics.html#cb27-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">n_serves =</span> <span class="fu">n</span>(),</span>
+<span id="cb27-4"><a href="indicators-and-statistics.html#cb27-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expected_breakpoint_rate =</span> <span class="fu">mean</span>(.data<span class="sc">$</span>expected_breakpoint_rate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="indicators-and-statistics.html#cb27-5" aria-hidden="true" tabindex="-1"></a>    ungroup</span>
+<span id="cb27-6"><a href="indicators-and-statistics.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 19 × 4</span></span>
+<span id="cb27-7"><a href="indicators-and-statistics.html#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    player_id player_name          n_serves expected_breakpoint_rate</span></span>
+<span id="cb27-8"><a href="indicators-and-statistics.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;                   &lt;int&gt;                    &lt;dbl&gt;</span></span>
+<span id="cb27-9"><a href="indicators-and-statistics.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 162       Jakub Peszko                1                    0    </span></span>
+<span id="cb27-10"><a href="indicators-and-statistics.html#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 172       Wojciech Sobala             2                    0.270</span></span>
+<span id="cb27-11"><a href="indicators-and-statistics.html#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 22529     Rafał Faryna               11                    0.364</span></span>
+<span id="cb27-12"><a href="indicators-and-statistics.html#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 22531     Bartłomiej Grzechnik       13                    0.319</span></span>
+<span id="cb27-13"><a href="indicators-and-statistics.html#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 22706     Maciej Fijałek              1                    0.270</span></span>
+<span id="cb27-14"><a href="indicators-and-statistics.html#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 231       Adrian Buchowski           15                    0.480</span></span>
+<span id="cb27-15"><a href="indicators-and-statistics.html#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 235       Tomasz Kowalski             2                    0.244</span></span>
+<span id="cb27-16"><a href="indicators-and-statistics.html#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 29752     Dawid Woch                  2                    0.488</span></span>
+<span id="cb27-17"><a href="indicators-and-statistics.html#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 29886     Emanuel Kohut              15                    0.313</span></span>
+<span id="cb27-18"><a href="indicators-and-statistics.html#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 30341     Tomas Rousseaux            16                    0.374</span></span>
+<span id="cb27-19"><a href="indicators-and-statistics.html#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 30511     Jake Langlois              11                    0.264</span></span>
+<span id="cb27-20"><a href="indicators-and-statistics.html#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 420       Lukas Tichacek             22                    0.392</span></span>
+<span id="cb27-21"><a href="indicators-and-statistics.html#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 433       Bartosz Krzysiek            7                    0.377</span></span>
+<span id="cb27-22"><a href="indicators-and-statistics.html#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 450       Artur Ratajczak            13                    0.461</span></span>
+<span id="cb27-23"><a href="indicators-and-statistics.html#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15 456       Rafał Sobański             13                    0.399</span></span>
+<span id="cb27-24"><a href="indicators-and-statistics.html#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16 488       Karol Butryn               15                    0.376</span></span>
+<span id="cb27-25"><a href="indicators-and-statistics.html#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17 516       Bartłomiej Krulicki        20                    0.437</span></span>
+<span id="cb27-26"><a href="indicators-and-statistics.html#cb27-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18 561       Marcin Komenda             11                    0.363</span></span>
+<span id="cb27-27"><a href="indicators-and-statistics.html#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19 632       Jan Fornal                  3                    0.325</span></span></code></pre></div>
+</div>
+<div id="set-assist-rate" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Set assist rate<a href="indicators-and-statistics.html#set-assist-rate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The assist rate is the proportion of sets that yield an attack kill. The <code>lead</code> function from the dplyr package helps here, allowing us to augment the “set” data rows with the outcome of the associated attack (which will be in the data row following the set data row):</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="indicators-and-statistics.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## first add a variable indicating whether a set was followed by a kill by the same team</span></span>
+<span id="cb28-2"><a href="indicators-and-statistics.html#cb28-2" aria-hidden="true" tabindex="-1"></a>px <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">set_had_attack_kill =</span> .data<span class="sc">$</span>skill <span class="sc">==</span> <span class="st">&quot;Set&quot;</span> <span class="sc">&amp;</span> <span class="fu">lead</span>(.data<span class="sc">$</span>skill) <span class="sc">==</span> <span class="st">&quot;Attack&quot;</span> <span class="sc">&amp;</span></span>
+<span id="cb28-3"><a href="indicators-and-statistics.html#cb28-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">lead</span>(.data<span class="sc">$</span>evaluation) <span class="sc">==</span> <span class="st">&quot;Winning attack&quot;</span> <span class="sc">&amp;</span> <span class="fu">lead</span>(.data<span class="sc">$</span>team) <span class="sc">==</span> .data<span class="sc">$</span>team) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="indicators-and-statistics.html#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="do">## then filter to just set rows</span></span>
+<span id="cb28-5"><a href="indicators-and-statistics.html#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(.data<span class="sc">$</span>skill <span class="sc">==</span> <span class="st">&quot;Set&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-6"><a href="indicators-and-statistics.html#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="do">## and summarize as desired</span></span>
+<span id="cb28-7"><a href="indicators-and-statistics.html#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(.data<span class="sc">$</span>team, .data<span class="sc">$</span>phase) <span class="sc">%&gt;%</span></span>
+<span id="cb28-8"><a href="indicators-and-statistics.html#cb28-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">assist_rate =</span> <span class="fu">sum</span>(set_had_attack_kill, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">n</span>())</span>
+<span id="cb28-9"><a href="indicators-and-statistics.html#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 3</span></span>
+<span id="cb28-10"><a href="indicators-and-statistics.html#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # Groups:   team [2]</span></span>
+<span id="cb28-11"><a href="indicators-and-statistics.html#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   team         phase      assist_rate</span></span>
+<span id="cb28-12"><a href="indicators-and-statistics.html#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;            &lt;dbl&gt;</span></span>
+<span id="cb28-13"><a href="indicators-and-statistics.html#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 GKS Katowice Reception        0.431</span></span>
+<span id="cb28-14"><a href="indicators-and-statistics.html#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 GKS Katowice Transition       0.478</span></span>
+<span id="cb28-15"><a href="indicators-and-statistics.html#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 MKS Będzin   Reception        0.429</span></span>
+<span id="cb28-16"><a href="indicators-and-statistics.html#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 MKS Będzin   Transition       0.355</span></span></code></pre></div>
+<p>Note that this relies on all set and attack actions being scouted (i.e. there is a row in our <code>px</code> data frame for every set, as well as for every attack. Some scouts do not record all ball touches — digs and sets are the most commonly-omitted skills.)</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="filtering-and-subsetting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="court-plots.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>

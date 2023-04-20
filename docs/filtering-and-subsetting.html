@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7 Filtering and subsetting | Volleyball analytics snippets</title>
   <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7 Filtering and subsetting | Volleyball analytics snippets" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://openvolley.github.io/volley-analytics-snippets/" />
   <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
   <meta property="og:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
@@ -21,7 +20,7 @@
   <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
 
-<meta name="author" content="Ben Raymond, Adrien Ickowicz" />
+<meta name="author" content="Ben Raymond, Adrien Ickowicz " />
 
 
 
@@ -31,8 +30,7 @@
   
   
 <link rel="prev" href="data-augmentation.html"/>
-<link rel="next" href="court-plots.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<link rel="next" href="indicators-and-statistics.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -166,22 +165,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#players-on-court"><i class="fa fa-check"></i><b>7.2</b> Players on court</a></li>
 <li class="chapter" data-level="7.3" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#first-transition-attack"><i class="fa fa-check"></i><b>7.3</b> First transition attack</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>8</b> Court plots</a>
+<li class="chapter" data-level="8" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html"><i class="fa fa-check"></i><b>8</b> Indicators and statistics</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>8.1</b> Background on location information</a>
+<li class="chapter" data-level="8.1" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-sideout-rate"><i class="fa fa-check"></i><b>8.1</b> Expected sideout rate</a></li>
+<li class="chapter" data-level="8.2" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-breakpoint-rate"><i class="fa fa-check"></i><b>8.2</b> Expected breakpoint rate</a></li>
+<li class="chapter" data-level="8.3" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#set-assist-rate"><i class="fa fa-check"></i><b>8.3</b> Set assist rate</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>9</b> Court plots</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>8.1.1</b> Zones and subzones</a></li>
-<li class="chapter" data-level="8.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>8.1.2</b> Coordinates</a></li>
-<li class="chapter" data-level="8.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>8.1.3</b> VBStats</a></li>
+<li class="chapter" data-level="9.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>9.1</b> Background on location information</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>9.1.1</b> Zones and subzones</a></li>
+<li class="chapter" data-level="9.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>9.1.2</b> Coordinates</a></li>
+<li class="chapter" data-level="9.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>9.1.3</b> VBStats</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>8.2</b> Plotting by zone or subzone</a></li>
-<li class="chapter" data-level="8.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>8.3</b> Plotting by cone</a></li>
-<li class="chapter" data-level="8.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>8.4</b> Plotting by line segment</a></li>
-<li class="chapter" data-level="8.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>8.5</b> Heatmaps</a></li>
-<li class="chapter" data-level="8.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>8.6</b> Changing direction</a></li>
-<li class="chapter" data-level="8.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>8.7</b> Plotting mid-coordinates</a></li>
+<li class="chapter" data-level="9.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>9.2</b> Plotting by zone or subzone</a></li>
+<li class="chapter" data-level="9.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>9.3</b> Plotting by cone</a></li>
+<li class="chapter" data-level="9.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>9.4</b> Plotting by line segment</a></li>
+<li class="chapter" data-level="9.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>9.5</b> Heatmaps</a></li>
+<li class="chapter" data-level="9.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>9.6</b> Changing direction</a></li>
+<li class="chapter" data-level="9.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>9.7</b> Plotting mid-coordinates</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>9</b> Odds and ends</a></li>
+<li class="chapter" data-level="10" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>10</b> Odds and ends</a></li>
 </ul>
 
       </nav>
@@ -199,23 +204,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="filtering-and-subsetting" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Filtering and subsetting</h1>
+<div id="filtering-and-subsetting" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">7</span> Filtering and subsetting<a href="filtering-and-subsetting.html#filtering-and-subsetting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Some different examples of extracting particular parts of the play-by-play data.</p>
-<div id="attack-after-perfect-or-good-reception" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Attack after perfect or good reception</h2>
+<div id="attack-after-perfect-or-good-reception" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Attack after perfect or good reception<a href="filtering-and-subsetting.html#attack-after-perfect-or-good-reception" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Aim:</strong> find attacks after perfect or good reception</p>
 <p>In the <a href="data-augmentation.html#reception-quality">Reception quality</a> section, we added a <code>reception_quality</code> column to our data frame. We can use this now to identify reception-phase attacks, in rallies where reception was good or perfect:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="filtering-and-subsetting.html#cb19-1" aria-hidden="true" tabindex="-1"></a>px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(skill <span class="sc">==</span> <span class="st">&quot;Attack&quot;</span> <span class="sc">&amp;</span> phase <span class="sc">==</span> <span class="st">&quot;Reception&quot;</span> <span class="sc">&amp;</span> <span class="fu">grepl</span>(<span class="st">&quot;Perfect|Positive&quot;</span>, reception_quality)) <span class="sc">%&gt;%</span></span>
 <span id="cb19-2"><a href="filtering-and-subsetting.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(team) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">kill_rate =</span> <span class="fu">mean</span>(evaluation <span class="sc">==</span> <span class="st">&quot;Winning attack&quot;</span>))</span>
 <span id="cb19-3"><a href="filtering-and-subsetting.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span id="cb19-4"><a href="filtering-and-subsetting.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   team            kill_rate</span></span>
-<span id="cb19-5"><a href="filtering-and-subsetting.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;               &lt;dbl&gt;</span></span>
-<span id="cb19-6"><a href="filtering-and-subsetting.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Braslovče           0.333</span></span>
-<span id="cb19-7"><a href="filtering-and-subsetting.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Nova KBM Branik     0.222</span></span></code></pre></div>
+<span id="cb19-4"><a href="filtering-and-subsetting.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   team         kill_rate</span></span>
+<span id="cb19-5"><a href="filtering-and-subsetting.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;            &lt;dbl&gt;</span></span>
+<span id="cb19-6"><a href="filtering-and-subsetting.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 GKS Katowice     0.636</span></span>
+<span id="cb19-7"><a href="filtering-and-subsetting.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 MKS Będzin       0.585</span></span></code></pre></div>
 </div>
-<div id="players-on-court" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Players on court</h2>
+<div id="players-on-court" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Players on court<a href="filtering-and-subsetting.html#players-on-court" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Aim:</strong> to extract the subset of our plays dataframe that correspond to points where particular players were on court.</p>
 <p>First some helper functions:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="filtering-and-subsetting.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## find rows where a single player is on court</span></span>
@@ -252,14 +257,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb20-32"><a href="filtering-and-subsetting.html#cb20-32" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>And then we can apply these functions, for example to find rows when both of the players with id <code>BR5</code> and <code>BR10</code> are on court:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="filtering-and-subsetting.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(px) <span class="do">## the number of rows in the full dataframe</span></span>
-<span id="cb21-2"><a href="filtering-and-subsetting.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1037</span></span>
+<span id="cb21-2"><a href="filtering-and-subsetting.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1652</span></span>
 <span id="cb21-3"><a href="filtering-and-subsetting.html#cb21-3" aria-hidden="true" tabindex="-1"></a>my_target_player_ids <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BR5&quot;</span>, <span class="st">&quot;BR10&quot;</span>)</span>
 <span id="cb21-4"><a href="filtering-and-subsetting.html#cb21-4" aria-hidden="true" tabindex="-1"></a>px2 <span class="ot">&lt;-</span> px[<span class="fu">all_players_on_court</span>(px, my_target_player_ids), ]</span>
 <span id="cb21-5"><a href="filtering-and-subsetting.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(px2) <span class="do">## the number of rows in the filtered dataframe</span></span>
-<span id="cb21-6"><a href="filtering-and-subsetting.html#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 81</span></span></code></pre></div>
+<span id="cb21-6"><a href="filtering-and-subsetting.html#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span></code></pre></div>
 </div>
-<div id="first-transition-attack" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> First transition attack</h2>
+<div id="first-transition-attack" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> First transition attack<a href="filtering-and-subsetting.html#first-transition-attack" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Aim:</strong> find rows corresponding to the first transition attack opportunity in each rally (i.e. after the receiving team has attacked, find the first attack by the serving team).</p>
 <p>As noted in the <a href="general-notes-and-tips.html#identifiers">Identifiers</a> setion, each team’s dig-set-attack (or whatever touches they make on their side of the net) has a unique <code>team_touch_id</code> value. First we find the <code>team_touch_id</code> values for reception-phase play, and then add one to each to get the <em>next</em> team touch (i.e. the first transition play, by the other team — but note that this next touch also has to be part of the same point, so we keep track of <code>point_id</code> too):</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="filtering-and-subsetting.html#cb22-1" aria-hidden="true" tabindex="-1"></a>ttid <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(skill <span class="sc">==</span> <span class="st">&quot;Reception&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(match_id, point_id, team_touch_id) <span class="sc">%&gt;%</span> </span>
@@ -277,7 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="data-augmentation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="court-plots.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="indicators-and-statistics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

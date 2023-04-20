@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 Setup | Volleyball analytics snippets</title>
   <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 Setup | Volleyball analytics snippets" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://openvolley.github.io/volley-analytics-snippets/" />
   <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
   <meta property="og:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
@@ -21,7 +20,7 @@
   <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
 
-<meta name="author" content="Ben Raymond, Adrien Ickowicz" />
+<meta name="author" content="Ben Raymond, Adrien Ickowicz " />
 
 
 
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="reading-files.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -166,22 +165,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#players-on-court"><i class="fa fa-check"></i><b>7.2</b> Players on court</a></li>
 <li class="chapter" data-level="7.3" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#first-transition-attack"><i class="fa fa-check"></i><b>7.3</b> First transition attack</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>8</b> Court plots</a>
+<li class="chapter" data-level="8" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html"><i class="fa fa-check"></i><b>8</b> Indicators and statistics</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>8.1</b> Background on location information</a>
+<li class="chapter" data-level="8.1" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-sideout-rate"><i class="fa fa-check"></i><b>8.1</b> Expected sideout rate</a></li>
+<li class="chapter" data-level="8.2" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-breakpoint-rate"><i class="fa fa-check"></i><b>8.2</b> Expected breakpoint rate</a></li>
+<li class="chapter" data-level="8.3" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#set-assist-rate"><i class="fa fa-check"></i><b>8.3</b> Set assist rate</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>9</b> Court plots</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>8.1.1</b> Zones and subzones</a></li>
-<li class="chapter" data-level="8.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>8.1.2</b> Coordinates</a></li>
-<li class="chapter" data-level="8.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>8.1.3</b> VBStats</a></li>
+<li class="chapter" data-level="9.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>9.1</b> Background on location information</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>9.1.1</b> Zones and subzones</a></li>
+<li class="chapter" data-level="9.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>9.1.2</b> Coordinates</a></li>
+<li class="chapter" data-level="9.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>9.1.3</b> VBStats</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>8.2</b> Plotting by zone or subzone</a></li>
-<li class="chapter" data-level="8.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>8.3</b> Plotting by cone</a></li>
-<li class="chapter" data-level="8.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>8.4</b> Plotting by line segment</a></li>
-<li class="chapter" data-level="8.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>8.5</b> Heatmaps</a></li>
-<li class="chapter" data-level="8.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>8.6</b> Changing direction</a></li>
-<li class="chapter" data-level="8.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>8.7</b> Plotting mid-coordinates</a></li>
+<li class="chapter" data-level="9.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>9.2</b> Plotting by zone or subzone</a></li>
+<li class="chapter" data-level="9.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>9.3</b> Plotting by cone</a></li>
+<li class="chapter" data-level="9.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>9.4</b> Plotting by line segment</a></li>
+<li class="chapter" data-level="9.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>9.5</b> Heatmaps</a></li>
+<li class="chapter" data-level="9.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>9.6</b> Changing direction</a></li>
+<li class="chapter" data-level="9.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>9.7</b> Plotting mid-coordinates</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>9</b> Odds and ends</a></li>
+<li class="chapter" data-level="10" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>10</b> Odds and ends</a></li>
 </ul>
 
       </nav>
@@ -199,29 +204,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setup" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Setup</h1>
+<div id="setup" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Setup<a href="setup.html#setup" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Install some volleyball-specific packages from the openvolley project:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repos =</span> <span class="fu">c</span>(<span class="at">openvolley =</span> <span class="st">&quot;https://openvolley.r-universe.dev&quot;</span>,</span>
 <span id="cb2-2"><a href="setup.html#cb2-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">CRAN =</span> <span class="st">&quot;https://cloud.r-project.org&quot;</span>))</span>
 <span id="cb2-3"><a href="setup.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;datavolley&quot;</span>, <span class="st">&quot;ovlytics&quot;</span>))</span></code></pre></div>
 <p>VBStats users will additionally need the <code>peranavolley</code> package:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;peranavolley&quot;</span>)</span></code></pre></div>
-<div id="example-data" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Example data</h2>
-<p>Load some data that we’ll use in this document for illustrative purposes:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup.html#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">dv_read</span>(<span class="fu">dv_example_file</span>(<span class="dv">1</span>))</span>
+<div id="example-data" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Example data<a href="setup.html#example-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Load some data that we’ll use in this document for illustrative purposes (a match between GKS Katowice and MKS Bedzin during the 2018/19 Polish Plus Liga, file courtesy Mark Lebedew):</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup.html#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">dv_read</span>(ovdata<span class="sc">::</span><span class="fu">ovdata_example</span>(<span class="st">&quot;190301_kats_beds&quot;</span>))</span>
 <span id="cb4-2"><a href="setup.html#cb4-2" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> <span class="fu">plays</span>(x)</span>
 <span id="cb4-3"><a href="setup.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="setup.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span>
 <span id="cb4-5"><a href="setup.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Match summary:</span></span>
-<span id="cb4-6"><a href="setup.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Date: 2015-01-25</span></span>
-<span id="cb4-7"><a href="setup.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; League: Finale mladinke</span></span>
-<span id="cb4-8"><a href="setup.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Teams: Braslovče (JERONČIČ ZORAN/MIHALINEC DAMIJANA)</span></span>
+<span id="cb4-6"><a href="setup.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Date: 2019-01-03</span></span>
+<span id="cb4-7"><a href="setup.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; League: Plus Liga 2018/2019 - Plus Liga 2018/20189- Faza Zasadnicza</span></span>
+<span id="cb4-8"><a href="setup.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Teams: GKS Katowice (Gruszka Piotr/Słaby Grzegorz)</span></span>
 <span id="cb4-9"><a href="setup.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        vs</span></span>
-<span id="cb4-10"><a href="setup.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        Nova KBM Branik (HAFNER MATJAŽ)</span></span>
-<span id="cb4-11"><a href="setup.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Result: 3-0 (25-16, 25-14, 25-22)</span></span>
-<span id="cb4-12"><a href="setup.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Duration: 67 minutes</span></span></code></pre></div>
+<span id="cb4-10"><a href="setup.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        MKS Będzin (Siewiorek Emil)</span></span>
+<span id="cb4-11"><a href="setup.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Result: 3-2 (25-20, 18-25, 25-15, 19-25, 15-6)</span></span>
+<span id="cb4-12"><a href="setup.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Duration: 114 minutes</span></span></code></pre></div>
 
 </div>
 </div>

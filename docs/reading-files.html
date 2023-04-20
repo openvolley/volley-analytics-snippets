@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Reading files | Volleyball analytics snippets</title>
   <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Reading files | Volleyball analytics snippets" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://openvolley.github.io/volley-analytics-snippets/" />
   <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
   <meta property="og:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
@@ -21,7 +20,7 @@
   <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
 
-<meta name="author" content="Ben Raymond, Adrien Ickowicz" />
+<meta name="author" content="Ben Raymond, Adrien Ickowicz " />
 
 
 
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="setup.html"/>
 <link rel="next" href="file-validation.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -166,22 +165,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#players-on-court"><i class="fa fa-check"></i><b>7.2</b> Players on court</a></li>
 <li class="chapter" data-level="7.3" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#first-transition-attack"><i class="fa fa-check"></i><b>7.3</b> First transition attack</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>8</b> Court plots</a>
+<li class="chapter" data-level="8" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html"><i class="fa fa-check"></i><b>8</b> Indicators and statistics</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>8.1</b> Background on location information</a>
+<li class="chapter" data-level="8.1" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-sideout-rate"><i class="fa fa-check"></i><b>8.1</b> Expected sideout rate</a></li>
+<li class="chapter" data-level="8.2" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-breakpoint-rate"><i class="fa fa-check"></i><b>8.2</b> Expected breakpoint rate</a></li>
+<li class="chapter" data-level="8.3" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#set-assist-rate"><i class="fa fa-check"></i><b>8.3</b> Set assist rate</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>9</b> Court plots</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>8.1.1</b> Zones and subzones</a></li>
-<li class="chapter" data-level="8.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>8.1.2</b> Coordinates</a></li>
-<li class="chapter" data-level="8.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>8.1.3</b> VBStats</a></li>
+<li class="chapter" data-level="9.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>9.1</b> Background on location information</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>9.1.1</b> Zones and subzones</a></li>
+<li class="chapter" data-level="9.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>9.1.2</b> Coordinates</a></li>
+<li class="chapter" data-level="9.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>9.1.3</b> VBStats</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>8.2</b> Plotting by zone or subzone</a></li>
-<li class="chapter" data-level="8.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>8.3</b> Plotting by cone</a></li>
-<li class="chapter" data-level="8.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>8.4</b> Plotting by line segment</a></li>
-<li class="chapter" data-level="8.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>8.5</b> Heatmaps</a></li>
-<li class="chapter" data-level="8.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>8.6</b> Changing direction</a></li>
-<li class="chapter" data-level="8.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>8.7</b> Plotting mid-coordinates</a></li>
+<li class="chapter" data-level="9.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>9.2</b> Plotting by zone or subzone</a></li>
+<li class="chapter" data-level="9.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>9.3</b> Plotting by cone</a></li>
+<li class="chapter" data-level="9.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>9.4</b> Plotting by line segment</a></li>
+<li class="chapter" data-level="9.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>9.5</b> Heatmaps</a></li>
+<li class="chapter" data-level="9.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>9.6</b> Changing direction</a></li>
+<li class="chapter" data-level="9.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>9.7</b> Plotting mid-coordinates</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>9</b> Odds and ends</a></li>
+<li class="chapter" data-level="10" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>10</b> Odds and ends</a></li>
 </ul>
 
       </nav>
@@ -199,10 +204,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reading-files" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Reading files</h1>
-<div id="datavolley" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> DataVolley</h2>
+<div id="reading-files" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> Reading files<a href="reading-files.html#reading-files" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="datavolley" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> DataVolley<a href="reading-files.html#datavolley" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="reading-files.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datavolley)</span>
 <span id="cb5-2"><a href="reading-files.html#cb5-2" aria-hidden="true" tabindex="-1"></a>filename <span class="ot">&lt;-</span> <span class="st">&quot;c:/my/filename.dvw&quot;</span></span>
 <span id="cb5-3"><a href="reading-files.html#cb5-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">dv_read</span>(filename)</span></code></pre></div>
@@ -214,13 +219,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><code>encoding</code> specifies the text encoding of the file. By default this will be guessed, but if the text encoding is guessed incorrectly then player/team names might appear garbled (e.g. accented characters wrong) and in extreme cases the file might refuse to read altogether. You can get an idea of what is going on with text encoding by asking for verbose output: <code>dv_read(..., verbose = TRUE)</code>. You can set the text encoding by e.g. <code>dv_read(..., encoding = "windows-1252")</code></p></li>
 </ul>
 </div>
-<div id="vbstats" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> VBStats</h2>
+<div id="vbstats" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> VBStats<a href="reading-files.html#vbstats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="reading-files.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(peranavolley)</span>
 <span id="cb6-2"><a href="reading-files.html#cb6-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">pv_read</span>(<span class="st">&quot;c:/my/filename.psvb&quot;</span>)</span></code></pre></div>
 </div>
-<div id="reading-multiple-files" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Reading multiple files</h2>
+<div id="reading-multiple-files" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Reading multiple files<a href="reading-files.html#reading-multiple-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You might want to read multiple files in and analyze them all together. First find all of the DataVolley files in the target directory:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="reading-files.html#cb7-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="st">&quot;c:/data&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot;dvw$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb7-2"><a href="reading-files.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">## if your files are in nested directories, add &#39;recursive = TRUE&#39; to the arguments</span></span></code></pre></div>

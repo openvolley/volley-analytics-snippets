@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 Data augmentation | Volleyball analytics snippets</title>
   <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 Data augmentation | Volleyball analytics snippets" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://openvolley.github.io/volley-analytics-snippets/" />
   <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
   <meta property="og:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
@@ -21,7 +20,7 @@
   <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
   <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
 
-<meta name="author" content="Ben Raymond, Adrien Ickowicz" />
+<meta name="author" content="Ben Raymond, Adrien Ickowicz " />
 
 
 
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="general-notes-and-tips.html"/>
 <link rel="next" href="filtering-and-subsetting.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -166,22 +165,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#players-on-court"><i class="fa fa-check"></i><b>7.2</b> Players on court</a></li>
 <li class="chapter" data-level="7.3" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#first-transition-attack"><i class="fa fa-check"></i><b>7.3</b> First transition attack</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>8</b> Court plots</a>
+<li class="chapter" data-level="8" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html"><i class="fa fa-check"></i><b>8</b> Indicators and statistics</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>8.1</b> Background on location information</a>
+<li class="chapter" data-level="8.1" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-sideout-rate"><i class="fa fa-check"></i><b>8.1</b> Expected sideout rate</a></li>
+<li class="chapter" data-level="8.2" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-breakpoint-rate"><i class="fa fa-check"></i><b>8.2</b> Expected breakpoint rate</a></li>
+<li class="chapter" data-level="8.3" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#set-assist-rate"><i class="fa fa-check"></i><b>8.3</b> Set assist rate</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>9</b> Court plots</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>8.1.1</b> Zones and subzones</a></li>
-<li class="chapter" data-level="8.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>8.1.2</b> Coordinates</a></li>
-<li class="chapter" data-level="8.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>8.1.3</b> VBStats</a></li>
+<li class="chapter" data-level="9.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>9.1</b> Background on location information</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>9.1.1</b> Zones and subzones</a></li>
+<li class="chapter" data-level="9.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>9.1.2</b> Coordinates</a></li>
+<li class="chapter" data-level="9.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>9.1.3</b> VBStats</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>8.2</b> Plotting by zone or subzone</a></li>
-<li class="chapter" data-level="8.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>8.3</b> Plotting by cone</a></li>
-<li class="chapter" data-level="8.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>8.4</b> Plotting by line segment</a></li>
-<li class="chapter" data-level="8.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>8.5</b> Heatmaps</a></li>
-<li class="chapter" data-level="8.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>8.6</b> Changing direction</a></li>
-<li class="chapter" data-level="8.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>8.7</b> Plotting mid-coordinates</a></li>
+<li class="chapter" data-level="9.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>9.2</b> Plotting by zone or subzone</a></li>
+<li class="chapter" data-level="9.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>9.3</b> Plotting by cone</a></li>
+<li class="chapter" data-level="9.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>9.4</b> Plotting by line segment</a></li>
+<li class="chapter" data-level="9.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>9.5</b> Heatmaps</a></li>
+<li class="chapter" data-level="9.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>9.6</b> Changing direction</a></li>
+<li class="chapter" data-level="9.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>9.7</b> Plotting mid-coordinates</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>9</b> Odds and ends</a></li>
+<li class="chapter" data-level="10" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>10</b> Odds and ends</a></li>
 </ul>
 
       </nav>
@@ -199,17 +204,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-augmentation" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Data augmentation</h1>
+<div id="data-augmentation" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> Data augmentation<a href="data-augmentation.html#data-augmentation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Some examples of adding extra columns to our play-by-play data in order to support particular analyses, or to make other data-wrangling tasks easier.</p>
-<div id="the-setter-of-a-given-attack" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> The setter of a given attack</h2>
+<div id="the-setter-of-a-given-attack" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> The setter of a given attack<a href="data-augmentation.html#the-setter-of-a-given-attack" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Aim:</strong> Identify the player who made the set associated with each attack (noting that some files might not have the setting action coded for all attacks, or even coded at all).</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-augmentation.html#cb14-1" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">set_player_id =</span> <span class="fu">case_when</span>(skill <span class="sc">==</span> <span class="st">&quot;Attack&quot;</span> <span class="sc">&amp;</span> <span class="fu">lag</span>(skill) <span class="sc">==</span> <span class="st">&quot;Set&quot;</span> <span class="sc">&amp;</span> team <span class="sc">==</span> <span class="fu">lag</span>(team) <span class="sc">~</span> <span class="fu">lag</span>(player_id))</span></code></pre></div>
 <p>(The <code>set_player_id</code> column will be <code>NA</code> when there is no matching set coded before the attack.)</p>
 </div>
-<div id="setter-player-ids" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Setter player IDs</h2>
+<div id="setter-player-ids" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Setter player IDs<a href="data-augmentation.html#setter-player-ids" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Aim:</strong> identify the <code>player_id</code> of the setter on court for each data row.</p>
 <p>The play-by-play data frame has <code>home_player_id1</code>, <code>home_player_id2</code>, …, <code>home_player_id6</code>, which give the <code>player_id</code> of the home team player currently in position 1, 2, …, and 6. It also has a <code>home_setter_position</code> column, which tells us which position the home team setter is in (1–6). So to create a <code>home_setter_id</code> column we simply need to extract the value in the <code>home_player_idX</code> column for each row of the data frame, where <code>X</code> is the value in the <code>home_setter_position</code> at each row.</p>
 <p>One way to do this is:</p>
@@ -222,8 +227,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>But that is rather cumbersome and inelegant. A more concise method is:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-augmentation.html#cb16-1" aria-hidden="true" tabindex="-1"></a>px <span class="ot">&lt;-</span> px <span class="sc">%&gt;%</span> <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">home_setter_id =</span> <span class="fu">cur_data</span>()[[<span class="fu">paste0</span>(<span class="st">&quot;home_player_id&quot;</span>, home_setter_position)]]) <span class="sc">%&gt;%</span> ungroup</span></code></pre></div>
 </div>
-<div id="reception-quality" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Reception quality</h2>
+<div id="reception-quality" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Reception quality<a href="data-augmentation.html#reception-quality" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Aim:</strong> add a column that tells us the reception quality associated with each rally.</p>
 <p>The reception quality for a given rally is found in the <code>evaluation</code> column of the row that has the <code>skill</code> value of “Reception”. We just need to propagate this value to all other rows associated with that particular rally.</p>
 <p>First we extract the reception quality for each rally (remember from the <a href="general-notes-and-tips.html#identifiers">Identifiers</a> section that the <code>point_id</code> value identifies the rally, but needs to be combined with <code>match_id</code> to be globally unique):</p>
