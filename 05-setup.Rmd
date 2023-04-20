@@ -18,10 +18,10 @@ install.packages("peranavolley")
 
 ## Example data
 
-Load some data that we'll use in this document for illustrative purposes:
+Load some data that we'll use in this document for illustrative purposes (a match between GKS Katowice and MKS Bedzin during the 2018/19 Polish Plus Liga, file courtesy Mark Lebedew):
 
 ```{r exampledata}
-x <- dv_read(dv_example_file(1))
+x <- dv_read(ovdata::ovdata_example("190301_kats_beds"))
 px <- plays(x)
 
 summary(x)
