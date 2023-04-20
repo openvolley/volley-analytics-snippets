@@ -231,8 +231,9 @@ xattack$end_coordinate_y[toflip] <- dv_flip_y(xattack$end_coordinate_y[toflip])
 Or a little more succinctly using dplyr functions:
 
 ```{r coordflip4}
-xattack[toflip, ] <- xattack[toflip, ] %>% mutate_at(c("start_coordinate_x", "mid_coordinate_x", "end_coordinate_x"), dv_flip_x) %>%
-  mutate_at(c("start_coordinate_y", "mid_coordinate_y", "end_coordinate_y"), dv_flip_y)
+xattack[toflip, ] <- xattack[toflip, ] %>%
+    mutate(across(all_of(c("start_coordinate_x", "mid_coordinate_x", "end_coordinate_x")), dv_flip_x),
+           across(all_of(c("start_coordinate_y", "mid_coordinate_y", "end_coordinate_y")), dv_flip_y))
 
 ```
 
