@@ -12,10 +12,9 @@ px <- px %>% mutate(set_player_id = case_when(skill == "Attack" & lag(skill) == 
 
 (The `set_player_id` column will be `NA` when there is no matching set coded before the attack.)
 
-
 ## Setter player IDs
 
-**Aim:** identify the `player_id` of the setter on court for each data row.
+**Aim:** Identify the `player_id` of the setter on court for each data row.
 
 The play-by-play data frame has `home_player_id1`, `home_player_id2`, ..., `home_player_id6`, which give the `player_id` of the home team player currently in position 1, 2, ..., and 6. It also has a `home_setter_position` column, which tells us which position the home team setter is in (1--6). So to create a `home_setter_id` column we simply need to extract the value in the `home_player_idX` column for each row of the data frame, where `X` is the value in the `home_setter_position` at each row.
 
@@ -38,7 +37,7 @@ px <- px %>% rowwise() %>% mutate(home_setter_id = cur_data()[[paste0("home_play
 
 ## Reception quality
 
-**Aim:** add a column that tells us the reception quality associated with each rally.
+**Aim:** Add a column that tells us the reception quality associated with each rally.
 
 The reception quality for a given rally is found in the `evaluation` column of the row that has the `skill` value of "Reception". We just need to propagate this value to all other rows associated with that particular rally.
 
@@ -56,3 +55,33 @@ px <- px %>% left_join(rq, by = c("match_id", "point_id"))
 ```
 
 So now we have `reception_quality` for all rows of the data frame.
+
+## Extracting part of the file name
+
+**Aim:** Add a column which has the file name or part of the file name
+
+Dependent on your file naming convention it is possible to extract parts of the file name into your `px`. These steps do backtrack to the [Reading files] section.
+
+```{r eval = FALSE}
+d <- dir("c:/data", pattern = "dvw$", full.names = TRUE)
+lx <- lapply(d, dv_read, insert_technical_timeouts = FALSE)
+px <- do.call(rbind, lapply(lx, function(dv) {
+  out <- plays(dv)
+  out$filename <- dv$meta$filename
+  out
+  }))
+```
+
+Notice if you have your files nested in nested directories, this will return the entire file name path. To get the `basename` you can use the `basename` function.
+
+```{r eval = FALSE}
+d <- dir("c:/data", pattern = "dvw$", full.names = TRUE)
+lx <- lapply(d, dv_read, insert_technical_timeouts = FALSE)
+px <- do.call(rbind, lapply(lx, function(dv) {
+  out <- plays(dv)
+  out$filename <- basename(dv$meta$filename)
+  out
+  }))
+```
+
+If this is a dvw, it will still return the `&` symbol and `.dvw` at the end.
