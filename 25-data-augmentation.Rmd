@@ -56,32 +56,42 @@ px <- px %>% left_join(rq, by = c("match_id", "point_id"))
 
 So now we have `reception_quality` for all rows of the data frame.
 
-## Extracting part of the file name
+## Extracting file meta data
 
-**Aim:** Add a column which has the file name or part of the file name
+**Aim:** Add a column which has information from the file meta object.
 
-Dependent on your file naming convention it is possible to extract parts of the file name into your `px`. These steps do backtrack to the [Reading files] section.
+It is possible to add parts of the meta data into your `px`. The data which you can add are as follows:
+
+| meta\$match | meta\$more | meta\$video |
+|-------------|------------|-------------|
+| date        | referees   | file        |
+| time        | spectators |             |
+| season      | receipts   |             |
+| league      | city       |             |
+| phase       | arena      |             |
+| home_away   | scout      |             |
+| day_number  |            |             |
+| mach_number |            |             |
+
+: These steps follow the [Reading files] section steps with some additions to the `px` portion. Where `out` will end up becoming your `px` object / main data you will be using.
 
 ```{r eval = FALSE}
 d <- dir("c:/data", pattern = "dvw$", full.names = TRUE)
 lx <- lapply(d, dv_read, insert_technical_timeouts = FALSE)
+
 px <- do.call(rbind, lapply(lx, function(dv) {
   out <- plays(dv)
-  out$filename <- dv$meta$filename
-  out
+  
+  # For the lx[[1]]$meta$filename
+  out$filename <- dv$meta$filename # basename(dv$meta$filename) is likely ideal
+  
+  # For the lx[[1]]$meta$match$date
+  out$date <- dv$meta$match$date
+  
+  # for the meta$more$referees
+  out$referees <- dv$more$referees
+
+  # Return the data to px  
+  return(out)
   }))
 ```
-
-Notice if you have your files nested in nested directories, this will return the entire file name path. To get the `basename` you can use the `basename` function.
-
-```{r eval = FALSE}
-d <- dir("c:/data", pattern = "dvw$", full.names = TRUE)
-lx <- lapply(d, dv_read, insert_technical_timeouts = FALSE)
-px <- do.call(rbind, lapply(lx, function(dv) {
-  out <- plays(dv)
-  out$filename <- basename(dv$meta$filename)
-  out
-  }))
-```
-
-If this is a dvw, return the `&` symbol and `.dvw` at the end.
