@@ -84,4 +84,4 @@ px <- do.call(rbind, lapply(lx, function(dv) {
   }))
 ```
 
-If this is a dvw, it will still return the `&` symbol and `.dvw` at the end.
+If this is a dvw, return the `&` symbol and `.dvw` at the end.
