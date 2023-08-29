@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10 Live scouting | Volleyball analytics snippets</title>
+  <meta name="description" content="Notes and snippets of R code for volleyball analytics" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10 Live scouting | Volleyball analytics snippets" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
+  <meta property="og:description" content="Notes and snippets of R code for volleyball analytics" />
+  <meta name="github-repo" content="openvolley/volley-analytics-snippets" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10 Live scouting | Volleyball analytics snippets" />
+  
+  <meta name="twitter:description" content="Notes and snippets of R code for volleyball analytics" />
+  <meta name="twitter:image" content="https://openvolley.github.io/volley-analytics-snippets//images/cover.png" />
+
+<meta name="author" content="Ben Raymond, Adrien Ickowicz " />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="court-plots.html"/>
+<link rel="next" href="odds-and-ends.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="journal.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#openvolley"><i class="fa fa-check"></i>openvolley</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i>Contributing</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contribution-guidelines"><i class="fa fa-check"></i>Contribution guidelines</a></li>
+</ul></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#contributors-and-acknowledgements"><i class="fa fa-check"></i><b>1.1</b> Contributors and acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> Setup</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="setup.html"><a href="setup.html#example-data"><i class="fa fa-check"></i><b>2.1</b> Example data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="reading-files.html"><a href="reading-files.html"><i class="fa fa-check"></i><b>3</b> Reading files</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="reading-files.html"><a href="reading-files.html#datavolley"><i class="fa fa-check"></i><b>3.1</b> DataVolley</a></li>
+<li class="chapter" data-level="3.2" data-path="reading-files.html"><a href="reading-files.html#vbstats"><i class="fa fa-check"></i><b>3.2</b> VBStats</a></li>
+<li class="chapter" data-level="3.3" data-path="reading-files.html"><a href="reading-files.html#reading-multiple-files"><i class="fa fa-check"></i><b>3.3</b> Reading multiple files</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="file-validation.html"><a href="file-validation.html"><i class="fa fa-check"></i><b>4</b> File validation</a></li>
+<li class="chapter" data-level="5" data-path="general-notes-and-tips.html"><a href="general-notes-and-tips.html"><i class="fa fa-check"></i><b>5</b> General notes and tips</a></li>
+<li class="chapter" data-level="6" data-path="data-augmentation.html"><a href="data-augmentation.html"><i class="fa fa-check"></i><b>6</b> Data augmentation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-augmentation.html"><a href="data-augmentation.html#the-setter-of-a-given-attack"><i class="fa fa-check"></i><b>6.1</b> The setter of a given attack</a></li>
+<li class="chapter" data-level="6.2" data-path="data-augmentation.html"><a href="data-augmentation.html#setter-player-ids"><i class="fa fa-check"></i><b>6.2</b> Setter player IDs</a></li>
+<li class="chapter" data-level="6.3" data-path="data-augmentation.html"><a href="data-augmentation.html#reception-quality"><i class="fa fa-check"></i><b>6.3</b> Reception quality</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html"><i class="fa fa-check"></i><b>7</b> Filtering and subsetting</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#attack-after-perfect-or-good-reception"><i class="fa fa-check"></i><b>7.1</b> Attack after perfect or good reception</a></li>
+<li class="chapter" data-level="7.2" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#players-on-court"><i class="fa fa-check"></i><b>7.2</b> Players on court</a></li>
+<li class="chapter" data-level="7.3" data-path="filtering-and-subsetting.html"><a href="filtering-and-subsetting.html#first-transition-attack"><i class="fa fa-check"></i><b>7.3</b> First transition attack</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html"><i class="fa fa-check"></i><b>8</b> Indicators and statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-sideout-rate"><i class="fa fa-check"></i><b>8.1</b> Expected sideout rate</a></li>
+<li class="chapter" data-level="8.2" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#expected-breakpoint-rate"><i class="fa fa-check"></i><b>8.2</b> Expected breakpoint rate</a></li>
+<li class="chapter" data-level="8.3" data-path="indicators-and-statistics.html"><a href="indicators-and-statistics.html#set-assist-rate"><i class="fa fa-check"></i><b>8.3</b> Set assist rate</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="court-plots.html"><a href="court-plots.html"><i class="fa fa-check"></i><b>9</b> Court plots</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="court-plots.html"><a href="court-plots.html#background-on-location-information"><i class="fa fa-check"></i><b>9.1</b> Background on location information</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="court-plots.html"><a href="court-plots.html#zones-and-subzones"><i class="fa fa-check"></i><b>9.1.1</b> Zones and subzones</a></li>
+<li class="chapter" data-level="9.1.2" data-path="court-plots.html"><a href="court-plots.html#coordinates"><i class="fa fa-check"></i><b>9.1.2</b> Coordinates</a></li>
+<li class="chapter" data-level="9.1.3" data-path="court-plots.html"><a href="court-plots.html#vbstats-1"><i class="fa fa-check"></i><b>9.1.3</b> VBStats</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="court-plots.html"><a href="court-plots.html#plotting-by-zone-or-subzone"><i class="fa fa-check"></i><b>9.2</b> Plotting by zone or subzone</a></li>
+<li class="chapter" data-level="9.3" data-path="court-plots.html"><a href="court-plots.html#plotting-by-cone"><i class="fa fa-check"></i><b>9.3</b> Plotting by cone</a></li>
+<li class="chapter" data-level="9.4" data-path="court-plots.html"><a href="court-plots.html#plotting-by-line-segment"><i class="fa fa-check"></i><b>9.4</b> Plotting by line segment</a></li>
+<li class="chapter" data-level="9.5" data-path="court-plots.html"><a href="court-plots.html#heatmaps"><i class="fa fa-check"></i><b>9.5</b> Heatmaps</a></li>
+<li class="chapter" data-level="9.6" data-path="court-plots.html"><a href="court-plots.html#changing-direction"><i class="fa fa-check"></i><b>9.6</b> Changing direction</a></li>
+<li class="chapter" data-level="9.7" data-path="court-plots.html"><a href="court-plots.html#plotting-mid-coordinates"><i class="fa fa-check"></i><b>9.7</b> Plotting mid-coordinates</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="live-scouting.html"><a href="live-scouting.html"><i class="fa fa-check"></i><b>10</b> Live scouting</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="live-scouting.html"><a href="live-scouting.html#shiny-on-the-scout-laptop"><i class="fa fa-check"></i><b>10.1</b> Shiny on the scout laptop</a></li>
+<li class="chapter" data-level="10.2" data-path="live-scouting.html"><a href="live-scouting.html#shiny-on-the-bench-laptop"><i class="fa fa-check"></i><b>10.2</b> Shiny on the bench laptop</a></li>
+<li class="chapter" data-level="10.3" data-path="live-scouting.html"><a href="live-scouting.html#send-the-file-via-the-internet"><i class="fa fa-check"></i><b>10.3</b> Send the file via the internet</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="odds-and-ends.html"><a href="odds-and-ends.html"><i class="fa fa-check"></i><b>11</b> Odds and ends</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Volleyball analytics snippets</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="live-scouting" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">10</span> Live scouting<a href="live-scouting.html#live-scouting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Most of the popular scouting software packages (DataVolley, Volley Station, etc) provide their own mechanism for connecting to live-scouted data, so that the coach or bench staff can get statistics and other information while the game is in progress. We can do the same by taking advantage of the safety scout file. This is a copy of the scout file that is automatically saved by the scouting software after each rally. There are several ways we could provide this data to our bench, in each case assuming that we will use a Shiny app that reads the scout file and produces the information that the bench staff will see.</p>
+<div id="shiny-on-the-scout-laptop" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Shiny on the scout laptop<a href="live-scouting.html#shiny-on-the-scout-laptop" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The first option is to run a Shiny app directly on the scout’s laptop. The server code of this app can read the contents of the scout safety file directly from wherever it is being saved. It would need to be re-read regularly to catch any updates (you could prevent unnecessary re-reads by using e.g. the <code>digest::digest()</code> function to determine if the file had actually changed since the last time it was read, or actively watch for changes in the file using the <code>testthat::watch()</code> function). The bench staff would then connect directly to the Shiny app using a browser on whatever device they prefer (they will need to know the IP address of the scout laptop and the port that Shiny is using. Note also that you will need to start the Shiny app on the scout laptop using <code>host = "0.0.0.0"</code> (e.g. <code>runApp(..., host = "0.0.0.0")</code>) in order to allow other clients to connect to it.</p>
+</div>
+<div id="shiny-on-the-bench-laptop" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Shiny on the bench laptop<a href="live-scouting.html#shiny-on-the-bench-laptop" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Maybe your scout laptop is a bit under-powered and isn’t really coping with running Shiny as well as the scouting software. Or maybe you have multiple clients that want to connect, and performance is not great (remember that Shiny is single-threaded, so a long-running computation for one client can cause other clients to hang until it completes). So an alternative could be to send the file from the scout laptop, and run Shiny on another machine elsewhere such as the bench laptop.</p>
+<p>We can do this by running a web server on the scout laptop (you still need R installed on the scout laptop, but this script is not particularly resource-intensive so it should not slow the scout laptop down too much). Run this on the scout laptop:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="live-scouting.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">## configuration</span></span>
+<span id="cb44-2"><a href="live-scouting.html#cb44-2" aria-hidden="true" tabindex="-1"></a>safety_scout_file <span class="ot">&lt;-</span> <span class="st">&quot;E:/path/to/scoutfile.dvw&quot;</span> <span class="do">## the path to your safety scout file</span></span>
+<span id="cb44-3"><a href="live-scouting.html#cb44-3" aria-hidden="true" tabindex="-1"></a>port <span class="ot">&lt;-</span> <span class="dv">8081</span> <span class="do">## only need to change this if some other process is using this port</span></span>
+<span id="cb44-4"><a href="live-scouting.html#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="live-scouting.html#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="do">## we want the file to always be exposed under a reasonably consistent URL, so that it&#39;s easier for the bench laptop to connect</span></span>
+<span id="cb44-6"><a href="live-scouting.html#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">## we can assume that only one file will be served from the scout&#39;s laptop at any one time</span></span>
+<span id="cb44-7"><a href="live-scouting.html#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="do">## so we use http://IPADDRESS:PORT/live as the URL, where IPADDRESS is the IP address of the scout laptop, and PORT is defined below</span></span>
+<span id="cb44-8"><a href="live-scouting.html#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-9"><a href="live-scouting.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(getip)</span>
+<span id="cb44-10"><a href="live-scouting.html#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httpuv)</span>
+<span id="cb44-11"><a href="live-scouting.html#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-12"><a href="live-scouting.html#cb44-12" aria-hidden="true" tabindex="-1"></a>scout_dir <span class="ot">&lt;-</span> <span class="fu">dirname</span>(<span class="fu">normalizePath</span>(safety_scout_file)) <span class="do">## the directory containing the scout file</span></span>
+<span id="cb44-13"><a href="live-scouting.html#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="do">## start webserver</span></span>
+<span id="cb44-14"><a href="live-scouting.html#cb44-14" aria-hidden="true" tabindex="-1"></a>srv <span class="ot">&lt;-</span> <span class="fu">startServer</span>(<span class="at">host =</span> <span class="st">&quot;0.0.0.0&quot;</span>, <span class="at">port =</span> port,</span>
+<span id="cb44-15"><a href="live-scouting.html#cb44-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">app =</span> <span class="fu">list</span>(</span>
+<span id="cb44-16"><a href="live-scouting.html#cb44-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">call =</span> <span class="cf">function</span>(req) {</span>
+<span id="cb44-17"><a href="live-scouting.html#cb44-17" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> (<span class="fu">grepl</span>(<span class="st">&quot;/live/?&quot;</span>, req<span class="sc">$</span>PATH_INFO)) {</span>
+<span id="cb44-18"><a href="live-scouting.html#cb44-18" aria-hidden="true" tabindex="-1"></a>              <span class="do">## read the file as raw bytes, to (hopefully) avoid text encoding issues that we might encounter if we read as text</span></span>
+<span id="cb44-19"><a href="live-scouting.html#cb44-19" aria-hidden="true" tabindex="-1"></a>              body <span class="ot">&lt;-</span> <span class="fu">readBin</span>(safety_scout_file, <span class="at">what =</span> <span class="st">&quot;raw&quot;</span>, <span class="at">n =</span> <span class="fu">file.size</span>(safety_scout_file) <span class="sc">*</span> <span class="fl">1.2</span>)</span>
+<span id="cb44-20"><a href="live-scouting.html#cb44-20" aria-hidden="true" tabindex="-1"></a>              <span class="do">## the headers here don&#39;t matter if we are going to download the file via another R process, but set them anyway</span></span>
+<span id="cb44-21"><a href="live-scouting.html#cb44-21" aria-hidden="true" tabindex="-1"></a>              <span class="do">## so that e.g. browser-based download will behave better</span></span>
+<span id="cb44-22"><a href="live-scouting.html#cb44-22" aria-hidden="true" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">status =</span> 200L, <span class="at">headers =</span> <span class="fu">list</span>(<span class="st">&quot;Content-Type&quot;</span> <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;application/&quot;</span>, tools<span class="sc">::</span><span class="fu">file_ext</span>(safety_scout_file)),</span>
+<span id="cb44-23"><a href="live-scouting.html#cb44-23" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">&quot;Content-Disposition&quot;</span> <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;attachment; filename=</span><span class="sc">\&quot;</span><span class="st">&quot;</span>, <span class="fu">basename</span>(safety_scout_file), <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>)), <span class="at">body =</span> body)</span>
+<span id="cb44-24"><a href="live-scouting.html#cb44-24" aria-hidden="true" tabindex="-1"></a>          } <span class="cf">else</span> {</span>
+<span id="cb44-25"><a href="live-scouting.html#cb44-25" aria-hidden="true" tabindex="-1"></a>              <span class="fu">list</span>(<span class="at">status =</span> 404L, <span class="at">headers =</span> <span class="fu">list</span>(<span class="st">&quot;Content-Type&quot;</span> <span class="ot">=</span> <span class="st">&quot;text/plain&quot;</span>), <span class="at">body =</span> <span class="st">&quot;404 Not Found</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb44-26"><a href="live-scouting.html#cb44-26" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb44-27"><a href="live-scouting.html#cb44-27" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb44-28"><a href="live-scouting.html#cb44-28" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb44-29"><a href="live-scouting.html#cb44-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-30"><a href="live-scouting.html#cb44-30" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">&quot;Use `srv$stop()` to stop the web server, or just exit the R session.</span><span class="sc">\n\n</span><span class="st">&quot;</span>,</span>
+<span id="cb44-31"><a href="live-scouting.html#cb44-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;The safety scout file URL is: http://IPADDRESS:&quot;</span>, port, <span class="st">&quot;/live&quot;</span>,</span>
+<span id="cb44-32"><a href="live-scouting.html#cb44-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot; where IPADDRESS is the IP address of this computer.</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb44-33"><a href="live-scouting.html#cb44-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Your IP address might be &quot;</span>, <span class="fu">getip</span>(), <span class="st">&quot;, so you can try:</span><span class="sc">\n\n</span><span class="st">&quot;</span>,</span>
+<span id="cb44-34"><a href="live-scouting.html#cb44-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;http://&quot;</span>, <span class="fu">getip</span>(), <span class="st">&quot;:&quot;</span>, port, <span class="st">&quot;/live</span><span class="sc">\n\n</span><span class="st">&quot;</span>,</span>
+<span id="cb44-35"><a href="live-scouting.html#cb44-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;from the bench laptop, but this IP identification method might not be reliable if you have multiple network interfaces.</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb44-36"><a href="live-scouting.html#cb44-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Use e.g. the `ipconfig` (on Windows) or `ifconfig` (Linux) system command to see all of your network interfaces and their IP addresses.&quot;</span>)</span></code></pre></div>
+<p>Then on the bench laptop, to download and read that file in an R script or Shiny app:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="live-scouting.html#cb45-1" aria-hidden="true" tabindex="-1"></a>tf <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.dvw&quot;</span>)</span>
+<span id="cb45-2"><a href="live-scouting.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;http://IPADDRESS:8081/live&quot;</span>, <span class="at">destfile =</span> tf)</span>
+<span id="cb45-3"><a href="live-scouting.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datavolley)</span>
+<span id="cb45-4"><a href="live-scouting.html#cb45-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">dv_read</span>(tf)</span></code></pre></div>
+<p>Note that the server (on the scout laptop) isn’t pushing the file when it changes, it’s just sending whatever the latest file version is on each request. In your bench Shiny app, either automatically re-retrieve the file every now and again, or have a refresh button that allows the user to re-download the file and update the app content.</p>
+</div>
+<div id="send-the-file-via-the-internet" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Send the file via the internet<a href="live-scouting.html#send-the-file-via-the-internet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The two options above use a direct connection between the scout laptop and the bench device. There is no need to be connected to the internet, but at the same time you do need to have both machines on the same private network and to know the IP address of the scout laptop. However, if you have internet access, the scout file can be transferred via the internet, meaning that you don’t need to set up a private network at the venue and with the bonus that live stats can be generated anywhere in the world. Science Untangled have written a file sender app to do this — you run it on the scout laptop, pointing it at your safety scout file and each time the file changes it will be uploaded to the getpantry.cloud site. A Shiny app on the bench laptop (or anywhere else in the world) can then pull the file down and generate whatever content you want from it.</p>
+<p>That file sender app is not written in R — it’s a standalone Rust app with installers for Mac/Windows/Linux, so it’s much smaller than installing R on the scout laptop. It’s open source and so you can inspect and modify the code if you wish. See the README for further info: <a href="https://github.com/scienceuntangled/file_sender" class="uri">https://github.com/scienceuntangled/file_sender</a> and the releases page for the installers: <a href="https://github.com/scienceuntangled/file_sender/releases" class="uri">https://github.com/scienceuntangled/file_sender/releases</a>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="court-plots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="odds-and-ends.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>

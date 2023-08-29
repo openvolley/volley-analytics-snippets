@@ -1,0 +1,72 @@
+# Live scouting
+
+Most of the popular scouting software packages (DataVolley, Volley Station, etc) provide their own mechanism for connecting to live-scouted data, so that the coach or bench staff can get statistics and other information while the game is in progress. We can do the same by taking advantage of the safety scout file. This is a copy of the scout file that is automatically saved by the scouting software after each rally. There are several ways we could provide this data to our bench, in each case assuming that we will use a Shiny app that reads the scout file and produces the information that the bench staff will see.
+
+## Shiny on the scout laptop
+
+The first option is to run a Shiny app directly on the scout's laptop. The server code of this app can read the contents of the scout safety file directly from wherever it is being saved. It would need to be re-read regularly to catch any updates (you could prevent unnecessary re-reads by using e.g. the `digest::digest()` function to determine if the file had actually changed since the last time it was read, or actively watch for changes in the file using the `testthat::watch()` function). The bench staff would then connect directly to the Shiny app using a browser on whatever device they prefer (they will need to know the IP address of the scout laptop and the port that Shiny is using. Note also that you will need to start the Shiny app on the scout laptop using `host = "0.0.0.0"` (e.g. `runApp(..., host = "0.0.0.0")`) in order to allow other clients to connect to it.
+
+## Shiny on the bench laptop
+
+Maybe your scout laptop is a bit under-powered and isn't really coping with running Shiny as well as the scouting software. Or maybe you have multiple clients that want to connect, and performance is not great (remember that Shiny is single-threaded, so a long-running computation for one client can cause other clients to hang until it completes). So an alternative could be to send the file from the scout laptop, and run Shiny on another machine elsewhere such as the bench laptop.
+
+We can do this by running a web server on the scout laptop (you still need R installed on the scout laptop, but this script is not particularly resource-intensive so it should not slow the scout laptop down too much). Run this on the scout laptop:
+
+```{r eval = FALSE}
+## configuration
+safety_scout_file <- "E:/path/to/scoutfile.dvw" ## the path to your safety scout file
+port <- 8081 ## only need to change this if some other process is using this port
+
+## we want the file to always be exposed under a reasonably consistent URL, so that it's easier for the bench laptop to connect
+## we can assume that only one file will be served from the scout's laptop at any one time
+## so we use http://IPADDRESS:PORT/live as the URL, where IPADDRESS is the IP address of the scout laptop, and PORT is defined below
+
+library(getip)
+library(httpuv)
+
+scout_dir <- dirname(normalizePath(safety_scout_file)) ## the directory containing the scout file
+## start webserver
+srv <- startServer(host = "0.0.0.0", port = port,
+  app = list(
+      call = function(req) {
+          if (grepl("/live/?", req$PATH_INFO)) {
+              ## read the file as raw bytes, to (hopefully) avoid text encoding issues that we might encounter if we read as text
+              body <- readBin(safety_scout_file, what = "raw", n = file.size(safety_scout_file) * 1.2)
+              ## the headers here don't matter if we are going to download the file via another R process, but set them anyway
+              ## so that e.g. browser-based download will behave better
+              list(status = 200L, headers = list("Content-Type" = paste0("application/", tools::file_ext(safety_scout_file)),
+                                                 "Content-Disposition" = paste0("attachment; filename=\"", basename(safety_scout_file), "\"")), body = body)
+          } else {
+              list(status = 404L, headers = list("Content-Type" = "text/plain"), body = "404 Not Found\n")
+          }
+      }
+  ))
+
+message("Use `srv$stop()` to stop the web server, or just exit the R session.\n\n",
+        "The safety scout file URL is: http://IPADDRESS:", port, "/live",
+        " where IPADDRESS is the IP address of this computer.\n",
+        "Your IP address might be ", getip(), ", so you can try:\n\n",
+        "http://", getip(), ":", port, "/live\n\n",
+        "from the bench laptop, but this IP identification method might not be reliable if you have multiple network interfaces.\n",
+        "Use e.g. the `ipconfig` (on Windows) or `ifconfig` (Linux) system command to see all of your network interfaces and their IP addresses.")
+
+```
+
+Then on the bench laptop, to download and read that file in an R script or Shiny app:
+
+```{r eval = FALSE}
+tf <- tempfile(fileext = ".dvw")
+download.file("http://IPADDRESS:8081/live", destfile = tf)
+library(datavolley)
+x <- dv_read(tf)
+
+```
+
+Note that the server (on the scout laptop) isn't pushing the file when it changes, it's just sending whatever the latest file version is on each request. In your bench Shiny app, either automatically re-retrieve the file every now and again, or have a refresh button that allows the user to re-download the file and update the app content.
+
+
+## Send the file via the internet
+
+The two options above use a direct connection between the scout laptop and the bench device. There is no need to be connected to the internet, but at the same time you do need to have both machines on the same private network and to know the IP address of the scout laptop. However, if you have internet access, the scout file can be transferred via the internet, meaning that you don't need to set up a private network at the venue and with the bonus that live stats can be generated anywhere in the world. Science Untangled have written a file sender app to do this &mdash; you run it on the scout laptop, pointing it at your safety scout file and each time the file changes it will be uploaded to the getpantry.cloud site. A Shiny app on the bench laptop (or anywhere else in the world) can then pull the file down and generate whatever content you want from it.
+
+That file sender app is not written in R &mdash; it's a standalone Rust app with installers for Mac/Windows/Linux, so it's much smaller than installing R on the scout laptop. It's open source and so you can inspect and modify the code if you wish. See the README for further info: https://github.com/scienceuntangled/file_sender and the releases page for the installers: https://github.com/scienceuntangled/file_sender/releases.

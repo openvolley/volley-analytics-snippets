@@ -31,4 +31,8 @@ plotting-by-line-segment
 heatmaps
 changing-direction
 plotting-mid-coordinates
+live-scouting
+shiny-on-the-scout-laptop
+shiny-on-the-bench-laptop
+send-the-file-via-the-internet
 odds-and-ends
